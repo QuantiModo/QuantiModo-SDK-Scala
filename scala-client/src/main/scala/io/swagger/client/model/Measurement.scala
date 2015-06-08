@@ -13,5 +13,7 @@ case class Measurement (
   /* Measurement value */
   value: Double,
   /* Unit of Measurement */
-  unit: String)
+  unit: String,
+  /* Optional note supplied with the measurement. Can be up to 255 characters in length. */
+  note: String)
   
