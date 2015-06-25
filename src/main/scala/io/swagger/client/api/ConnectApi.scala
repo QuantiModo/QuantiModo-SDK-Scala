@@ -1,9 +1,5 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.User
-import io.swagger.client.model.UserTokenRequest
-import io.swagger.client.model.UserTokenFailedResponse
-import io.swagger.client.model.UserTokenSuccessfulResponse
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 
@@ -17,7 +13,7 @@ import java.util.Date
 
 import scala.collection.mutable.HashMap
 
-class UserApi(val defBasePath: String = "https://localhost/api",
+class ConnectApi(val defBasePath: String = "https://localhost/api",
                         defApiInvoker: ApiInvoker = ApiInvoker) {
   var basePath = defBasePath
   var apiInvoker = defApiInvoker
@@ -26,13 +22,14 @@ class UserApi(val defBasePath: String = "https://localhost/api",
 
   
   /**
-   * Get all available units for variableGet authenticated user
-   * Returns user info for the currently authenticated user.
-   * @return User
+   * Get embeddable connect javascript
+   * Get embeddable connect javascript
+   * @param t User token
+   * @return void
    */
-  def userMeGet () : Option[User] = {
+  def v1ConnectJsGet (t: String)  = {
     // create path and map variables
-    val path = "/user/me".replaceAll("\\{format\\}","json")
+    val path = "/v1/connect.js".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -44,6 +41,7 @@ class UserApi(val defBasePath: String = "https://localhost/api",
 
     
 
+    if(String.valueOf(t) != "null") queryParams += "t" -> t.toString
     
     
     
@@ -62,8 +60,7 @@ class UserApi(val defBasePath: String = "https://localhost/api",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[User]).asInstanceOf[User])
-         
+           
         case _ => None
       }
     } catch {
@@ -73,17 +70,14 @@ class UserApi(val defBasePath: String = "https://localhost/api",
   }
   
   /**
-   * Get user tokens for existing users, create new users
-   * Get user tokens for existing users, create new users
-   * @param organizationId Organization ID
-   * @param body Provides organization token and user ID
-   * @return UserTokenSuccessfulResponse
+   * Mobile connect page
+   * Mobile connect page
+   * @param t User token
+   * @return void
    */
-  def v1OrganizationsOrganizationIdUsersPost (organizationId: Integer, body: UserTokenRequest) : Option[UserTokenSuccessfulResponse] = {
+  def v1ConnectMobileGet (t: String)  = {
     // create path and map variables
-    val path = "/v1/organizations/{organizationId}/users".replaceAll("\\{format\\}","json").replaceAll("\\{" + "organizationId" + "\\}",apiInvoker.escape(organizationId))
-
-    
+    val path = "/v1/connect/mobile".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -95,11 +89,12 @@ class UserApi(val defBasePath: String = "https://localhost/api",
 
     
 
+    if(String.valueOf(t) != "null") queryParams += "t" -> t.toString
     
     
     
 
-    var postBody: AnyRef = body
+    var postBody: AnyRef = null
 
     if(contentType.startsWith("multipart/form-data")) {
       val mp = new FormDataMultiPart()
@@ -111,10 +106,9 @@ class UserApi(val defBasePath: String = "https://localhost/api",
     }
 
     try {
-      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[UserTokenSuccessfulResponse]).asInstanceOf[UserTokenSuccessfulResponse])
-         
+           
         case _ => None
       }
     } catch {

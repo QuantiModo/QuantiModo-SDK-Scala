@@ -10,8 +10,12 @@ case class Measurement (
   source: String,
   /* Timestamp for the measurement event in epoch time */
   timestamp: Long,
-  /* Measurement value */
+  /* Converted measurement value in requested unit */
   value: Double,
-  /* Unit of Measurement */
-  unit: String)
+  /* Unit of measurement as requested in GET request */
+  unit: String,
+  /* Measurement value in the unit as orignally submitted */
+  storedValue: Double,
+  /* Unit of measurement as originally submitted */
+  storedUnit: String)
   
