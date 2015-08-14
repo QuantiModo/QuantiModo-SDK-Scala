@@ -123,4 +123,59 @@ class UnitsApi(val defBasePath: String = "https://localhost/api",
     }
   }
   
+  /**
+   * Units for Variable
+   * Get a list of all possible units to use for a given variable
+   * @param unitName Name of Unit you want to retrieve
+   * @param abbreviatedUnitName Abbreviated Unit Name of the unit you want
+   * @param categoryName Name of the category you want units for
+   * @param variable Name of the variable you want units for
+   * @return List[Unit]
+   */
+  def unitsVariableGet (unitName: String, abbreviatedUnitName: String, categoryName: String, variable: String) : Option[List[Unit]] = {
+    // create path and map variables
+    val path = "/unitsVariable".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(unitName) != "null") queryParams += "unitName" -> unitName.toString
+    if(String.valueOf(abbreviatedUnitName) != "null") queryParams += "abbreviatedUnitName" -> abbreviatedUnitName.toString
+    if(String.valueOf(categoryName) != "null") queryParams += "categoryName" -> categoryName.toString
+    if(String.valueOf(variable) != "null") queryParams += "variable" -> variable.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           Some(ApiInvoker.deserialize(s, "array", classOf[Unit]).asInstanceOf[List[Unit]])
+         
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
 }

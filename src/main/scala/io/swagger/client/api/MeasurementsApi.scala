@@ -121,16 +121,19 @@ class MeasurementsApi(val defBasePath: String = "https://localhost/api",
   
   /**
    * Get measurements for this user
-   * Measurements are any value that can be recorded like daily steps, a mood rating, or apples eaten.
+   * Measurements are any value that can be recorded like daily steps, a mood rating, or apples eaten. &lt;br&gt;Supported filter parameters:&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;value&lt;/b&gt; - Value of measurement&lt;/li&gt;&lt;li&gt;&lt;b&gt;lastUpdated&lt;/b&gt; - The time that this measurement was created or last updated in the UTC format \&quot;YYYY-MM-DDThh:mm:ss\&quot;&lt;/li&gt;&lt;/ul&gt;&lt;br&gt;
    * @param variableName Name of the variable you want measurements for
    * @param unit The unit your want the measurements in
    * @param startTime The lower limit of measurements returned (Epoch)
    * @param endTime The upper limit of measurements returned (Epoch)
    * @param groupingWidth The time (in seconds) over which measurements are grouped together
    * @param groupingTimezone The time (in seconds) over which measurements are grouped together
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0.
+   * @param offset Now suppose you wanted to show results 11-20. You&#39;d set the offset to 10 and the limit to 10.
+   * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return Measurement
    */
-  def measurementsGet (variableName: String, unit: String, startTime: String, endTime: String, groupingWidth: Integer, groupingTimezone: String) : Option[Measurement] = {
+  def measurementsGet (variableName: String, unit: String, startTime: String, endTime: String, groupingWidth: Integer, groupingTimezone: String, limit: Integer, offset: Integer, sort: Integer) : Option[Measurement] = {
     // create path and map variables
     val path = "/measurements".replaceAll("\\{format\\}","json")
 
@@ -150,6 +153,9 @@ class MeasurementsApi(val defBasePath: String = "https://localhost/api",
     if(String.valueOf(endTime) != "null") queryParams += "endTime" -> endTime.toString
     if(String.valueOf(groupingWidth) != "null") queryParams += "groupingWidth" -> groupingWidth.toString
     if(String.valueOf(groupingTimezone) != "null") queryParams += "groupingTimezone" -> groupingTimezone.toString
+    if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
+    if(String.valueOf(offset) != "null") queryParams += "offset" -> offset.toString
+    if(String.valueOf(sort) != "null") queryParams += "sort" -> sort.toString
     
     
     

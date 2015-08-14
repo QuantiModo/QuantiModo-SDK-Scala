@@ -26,18 +26,21 @@ class PairsApi(val defBasePath: String = "https://localhost/api",
    * Get pairs
    * Pairs cause measurements with effect measurements grouped over the duration of action after the onset delay.
    * @param cause Original variable name for the explanatory or independent variable
+   * @param effect Original variable name for the outcome or dependent variable
    * @param causeSource Name of data source that the cause measurements should come from
    * @param causeUnit Abbreviated name for the unit cause measurements to be returned in
    * @param delay Delay before onset of action (in seconds) from the cause variable settings.
    * @param duration Duration of action (in seconds) from the cause variable settings.
-   * @param effect Original variable name for the outcome or dependent variable
    * @param effectSource Name of data source that the effectmeasurements should come from
    * @param effectUnit Abbreviated name for the unit effect measurements to be returned in
    * @param endTime The most recent date (in epoch time) for which we should return measurements
    * @param startTime The earliest date (in epoch time) for which we should return measurements
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0.
+   * @param offset Now suppose you wanted to show results 11-20. You&#39;d set the offset to 10 and the limit to 10.
+   * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return List[Pairs]
    */
-  def pairsGet (cause: String, causeSource: String, causeUnit: String, delay: String, duration: String, effect: String, effectSource: String, effectUnit: String, endTime: String, startTime: String) : Option[List[Pairs]] = {
+  def pairsGet (cause: String, effect: String, causeSource: String, causeUnit: String, delay: String, duration: String, effectSource: String, effectUnit: String, endTime: String, startTime: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Pairs]] = {
     // create path and map variables
     val path = "/pairs".replaceAll("\\{format\\}","json")
 
@@ -61,6 +64,9 @@ class PairsApi(val defBasePath: String = "https://localhost/api",
     if(String.valueOf(effectUnit) != "null") queryParams += "effectUnit" -> effectUnit.toString
     if(String.valueOf(endTime) != "null") queryParams += "endTime" -> endTime.toString
     if(String.valueOf(startTime) != "null") queryParams += "startTime" -> startTime.toString
+    if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
+    if(String.valueOf(offset) != "null") queryParams += "offset" -> offset.toString
+    if(String.valueOf(sort) != "null") queryParams += "sort" -> sort.toString
     
     
     

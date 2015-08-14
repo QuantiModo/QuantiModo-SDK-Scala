@@ -3,6 +3,7 @@ package io.swagger.client.api
 import io.swagger.client.model.Correlation
 import io.swagger.client.model.PostCorrelation
 import io.swagger.client.model.JsonErrorResponse
+import io.swagger.client.model.CommonResponse
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 
@@ -26,12 +27,15 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
   
   /**
    * Get correlations
-   * Get correlations
+   * Get correlations.&lt;br&gt;Supported filter parameters:&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;correlationCoefficient&lt;/b&gt; - Pearson correlation coefficient between cause and effect after lagging by onset delay and grouping by duration of action&lt;/li&gt;&lt;li&gt;&lt;b&gt;onsetDelay&lt;/b&gt; - The number of seconds which pass following a cause measurement before an effect would likely be observed.&lt;/li&gt;&lt;li&gt;&lt;b&gt;durationOfAction&lt;/b&gt; - The time in seconds over which the cause would be expected to exert a measurable effect. We have selected a default value for each variable. This default value may be replaced by a user specified by adjusting their variable user settings.&lt;/li&gt;&lt;li&gt;&lt;b&gt;lastUpdated&lt;/b&gt; - The time that this measurement was last updated in the UTC format \&quot;YYYY-MM-DDThh:mm:ss\&quot;&lt;/li&gt;&lt;/ul&gt;&lt;br&gt;
    * @param effect ORIGINAL variable name of the effect variable for which the user desires correlations
    * @param cause ORIGINAL variable name of the cause variable for which the user desires correlations
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0.
+   * @param offset Now suppose you wanted to show results 11-20. You&#39;d set the offset to 10 and the limit to 10.
+   * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return List[Correlation]
    */
-  def correlationsGet (effect: String, cause: String) : Option[List[Correlation]] = {
+  def correlationsGet (effect: String, cause: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Correlation]] = {
     // create path and map variables
     val path = "/correlations".replaceAll("\\{format\\}","json")
 
@@ -47,6 +51,9 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
 
     if(String.valueOf(effect) != "null") queryParams += "effect" -> effect.toString
     if(String.valueOf(cause) != "null") queryParams += "cause" -> cause.toString
+    if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
+    if(String.valueOf(offset) != "null") queryParams += "offset" -> offset.toString
+    if(String.valueOf(sort) != "null") queryParams += "sort" -> sort.toString
     
     
     
@@ -242,9 +249,9 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
    * @param variableName Cause variable name
    * @param organizationToken Organization access token
    * @param includePublic Include bublic correlations, Can be \&quot;1\&quot; or empty.
-   * @return List[Correlation]
+   * @return List[CommonResponse]
    */
-  def v1OrganizationsOrganizationIdUsersUserIdVariablesVariableNameEffectsGet (organizationId: Integer, userId: Integer, variableName: String, organizationToken: String, includePublic: String) : Option[List[Correlation]] = {
+  def v1OrganizationsOrganizationIdUsersUserIdVariablesVariableNameEffectsGet (organizationId: Integer, userId: Integer, variableName: String, organizationToken: String, includePublic: String) : Option[List[CommonResponse]] = {
     // create path and map variables
     val path = "/v1/organizations/{organizationId}/users/{userId}/variables/{variableName}/effects".replaceAll("\\{format\\}","json").replaceAll("\\{" + "organizationId" + "\\}",apiInvoker.escape(organizationId))
 
@@ -284,7 +291,7 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "array", classOf[Correlation]).asInstanceOf[List[Correlation]])
+           Some(ApiInvoker.deserialize(s, "array", classOf[CommonResponse]).asInstanceOf[List[CommonResponse]])
          
         case _ => None
       }
@@ -485,6 +492,110 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
            Some(ApiInvoker.deserialize(s, "array", classOf[Correlation]).asInstanceOf[List[Correlation]])
+         
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Post or update vote
+   * This is to enable users to indicate their opinion on the plausibility of a causal relationship between a treatment and outcome. QuantiModo incorporates crowd-sourced plausibility estimations into their algorithm. This is done allowing user to indicate their view of the plausibility of each relationship with thumbs up/down buttons placed next to each prediction.
+   * @param cause Cause variable name
+   * @param effect Effect variable name
+   * @param vote Vote: 0 (for implausible) or 1 (for plausible)
+   * @return CommonResponse
+   */
+  def v1VotesPost (cause: String, effect: String, vote: Boolean) : Option[CommonResponse] = {
+    // create path and map variables
+    val path = "/v1/votes".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(cause) != "null") queryParams += "cause" -> cause.toString
+    if(String.valueOf(effect) != "null") queryParams += "effect" -> effect.toString
+    if(String.valueOf(vote) != "null") queryParams += "vote" -> vote.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           Some(ApiInvoker.deserialize(s, "", classOf[CommonResponse]).asInstanceOf[CommonResponse])
+         
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Delete vote
+   * Delete previously posted vote
+   * @param cause Cause variable name
+   * @param effect Effect variable name
+   * @return CommonResponse
+   */
+  def v1VotesDeletePost (cause: String, effect: String) : Option[CommonResponse] = {
+    // create path and map variables
+    val path = "/v1/votes/delete".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(cause) != "null") queryParams += "cause" -> cause.toString
+    if(String.valueOf(effect) != "null") queryParams += "effect" -> effect.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           Some(ApiInvoker.deserialize(s, "", classOf[CommonResponse]).asInstanceOf[CommonResponse])
          
         case _ => None
       }

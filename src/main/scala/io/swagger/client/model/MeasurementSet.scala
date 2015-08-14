@@ -1,6 +1,5 @@
 package io.swagger.client.model
 
-import io.swagger.client.model.ValueObject
 
 
 
