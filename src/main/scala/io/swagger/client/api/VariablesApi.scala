@@ -1,8 +1,8 @@
 package io.swagger.client.api
 
 import io.swagger.client.model.Variable
+import io.swagger.client.model.UserVariables
 import io.swagger.client.model.VariableCategory
-import io.swagger.client.model.VariableUserSettings
 import io.swagger.client.model.VariablesNew
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
@@ -128,7 +128,7 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
   
   /**
    * Get top 5 PUBLIC variables with the most correlations
-   * Get top 5 PUBLIC variables with the most correlations containing the entered search characters. For example, search for &#39;mood&#39; as an effect. Since &#39;Overall Mood&#39; has a lot of correlations with other variables, it should be in the autocomplete list.
+   * Get top 5 PUBLIC variables with the most correlations containing the entered search characters. For example, search for &#39;mood&#39; as an effect. Since &#39;Overall Mood&#39; has a lot of correlations with other variables, it should be in the autocomplete list.&lt;br&gt;Supported filter parameters:&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;category&lt;/b&gt; - Category of Variable&lt;/li&gt;&lt;/ul&gt;&lt;br&gt;
    * @param search Search query can be some fraction of a variable name.
    * @param effectOrCause Allows us to specify which column in the `correlations` table will be searched. Choices are effect or cause.
    * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0.
@@ -185,6 +185,53 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
   }
   
   /**
+   * Update User Settings for a Variable
+   * Users can change things like the display name for a variable. They can also change the parameters used in analysis of that variable such as the expected duration of action for a variable to have an effect, the estimated delay before the onset of action. In order to filter out erroneous data, they are able to set the maximum and minimum reasonable daily values for a variable.
+   * @param sharingData Variable user settings data
+   * @return void
+   */
+  def v1UserVariablesPost (sharingData: UserVariables)  = {
+    // create path and map variables
+    val path = "/v1/userVariables".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    
+    
+    
+
+    var postBody: AnyRef = sharingData
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
    * Variable categories
    * The variable categories include Activity, Causes of Illness, Cognitive Performance, Conditions, Environment, Foods, Location, Miscellaneous, Mood, Nutrition, Physical Activity, Physique, Sleep, Social Interactions, Symptoms, Treatments, Vital Signs, and Work.
    * @return List[VariableCategory]
@@ -223,53 +270,6 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
         case s: String =>
            Some(ApiInvoker.deserialize(s, "array", classOf[VariableCategory]).asInstanceOf[List[VariableCategory]])
          
-        case _ => None
-      }
-    } catch {
-      case ex: ApiException if ex.code == 404 => None
-      case ex: ApiException => throw ex
-    }
-  }
-  
-  /**
-   * Update User Settings for a Variable
-   * Users can change things like the display name for a variable. They can also change the parameters used in analysis of that variable such as the expected duration of action for a variable to have an effect, the estimated delay before the onset of action. In order to filter out erroneous data, they are able to set the maximum and minimum reasonable daily values for a variable.
-   * @param sharingData Variable user settings data
-   * @return void
-   */
-  def variableUserSettingsPost (sharingData: VariableUserSettings)  = {
-    // create path and map variables
-    val path = "/variableUserSettings".replaceAll("\\{format\\}","json")
-
-    val contentTypes = List("application/json")
-    val contentType = contentTypes(0)
-
-    // query params
-    val queryParams = new HashMap[String, String]
-    val headerParams = new HashMap[String, String]
-    val formParams = new HashMap[String, String]
-
-    
-
-    
-    
-    
-
-    var postBody: AnyRef = sharingData
-
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
-      
-      postBody = mp
-    }
-    else {
-      
-    }
-
-    try {
-      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
-        case s: String =>
-           
         case _ => None
       }
     } catch {

@@ -21,7 +21,7 @@ case class Connector (
   /* Epoch timestamp of last sync */
   lastUpdate: Integer,
   /* Number of measurements obtained during latest update */
-  latestData: Integer,
+  totalMeasurementsInLastUpdate: Integer,
   /* True if user has no measurements for this connector */
   noDataYet: Boolean)
   

@@ -17,5 +17,5 @@ case class Measurement (
   /* Measurement value in the unit as orignally submitted */
   storedValue: Double,
   /* Unit of measurement as originally submitted */
-  storedUnit: String)
+  storedAbbreviatedUnitName: String)
   
