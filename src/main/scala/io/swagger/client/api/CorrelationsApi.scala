@@ -4,6 +4,7 @@ import io.swagger.client.model.Correlation
 import io.swagger.client.model.PostCorrelation
 import io.swagger.client.model.JsonErrorResponse
 import io.swagger.client.model.CommonResponse
+import io.swagger.client.model.Number
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 
@@ -35,9 +36,9 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
    * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return List[Correlation]
    */
-  def correlationsGet (effect: String, cause: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Correlation]] = {
+  def v1CorrelationsGet (effect: String, cause: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Correlation]] = {
     // create path and map variables
-    val path = "/correlations".replaceAll("\\{format\\}","json")
+    val path = "/v1/correlations".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -83,60 +84,8 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
   }
   
   /**
-   * Get average correlations for variables containing search term
-   * Returns the average correlations from all users for all public variables that contain the characters in the search query. Returns average of all users public variable correlations with a specified cause or effect.
-   * @param search Name of the variable that you want to know the causes or effects of.
-   * @param effectOrCause Specifies whether to return the effects or causes of the searched variable.
-   * @return List[Correlation]
-   */
-  def publicCorrelationsSearchSearchGet (search: String, effectOrCause: String) : Option[List[Correlation]] = {
-    // create path and map variables
-    val path = "/public/correlations/search/{search}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "search" + "\\}",apiInvoker.escape(search))
-
-    
-
-    val contentTypes = List("application/json")
-    val contentType = contentTypes(0)
-
-    // query params
-    val queryParams = new HashMap[String, String]
-    val headerParams = new HashMap[String, String]
-    val formParams = new HashMap[String, String]
-
-    
-
-    if(String.valueOf(effectOrCause) != "null") queryParams += "effectOrCause" -> effectOrCause.toString
-    
-    
-    
-
-    var postBody: AnyRef = null
-
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
-      
-      postBody = mp
-    }
-    else {
-      
-    }
-
-    try {
-      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
-        case s: String =>
-           Some(ApiInvoker.deserialize(s, "array", classOf[Correlation]).asInstanceOf[List[Correlation]])
-         
-        case _ => None
-      }
-    } catch {
-      case ex: ApiException if ex.code == 404 => None
-      case ex: ApiException => throw ex
-    }
-  }
-  
-  /**
-   * Add correlation or/and vote for it
-   * Add correlation or/and vote for it
+   * Store or Update a Correlation
+   * Add correlation
    * @param body Provides correlation data
    * @return void
    */
@@ -182,8 +131,8 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
   }
   
   /**
-   * Search user correlations for a given effect
-   * Returns average of all correlations and votes for all user cause variables for a given effect. If parameter \&quot;include_public\&quot; is used, it also returns public correlations. User correlation overwrites or supersedes public correlation.
+   * Search user correlations for a given cause
+   * Returns average of all correlations and votes for all user cause variables for a given cause. If parameter \&quot;include_public\&quot; is used, it also returns public correlations. User correlation overwrites or supersedes public correlation.
    * @param organizationId Organization ID
    * @param userId User id
    * @param variableName Effect variable name
@@ -292,6 +241,58 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
            Some(ApiInvoker.deserialize(s, "array", classOf[CommonResponse]).asInstanceOf[List[CommonResponse]])
+         
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Get average correlations for variables containing search term
+   * Returns the average correlations from all users for all public variables that contain the characters in the search query. Returns average of all users public variable correlations with a specified cause or effect.
+   * @param search Name of the variable that you want to know the causes or effects of.
+   * @param effectOrCause Specifies whether to return the effects or causes of the searched variable.
+   * @return List[Correlation]
+   */
+  def v1PublicCorrelationsSearchSearchGet (search: String, effectOrCause: String) : Option[List[Correlation]] = {
+    // create path and map variables
+    val path = "/v1/public/correlations/search/{search}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "search" + "\\}",apiInvoker.escape(search))
+
+    
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(effectOrCause) != "null") queryParams += "effectOrCause" -> effectOrCause.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           Some(ApiInvoker.deserialize(s, "array", classOf[Correlation]).asInstanceOf[List[Correlation]])
          
         case _ => None
       }
@@ -506,10 +507,11 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
    * This is to enable users to indicate their opinion on the plausibility of a causal relationship between a treatment and outcome. QuantiModo incorporates crowd-sourced plausibility estimations into their algorithm. This is done allowing user to indicate their view of the plausibility of each relationship with thumbs up/down buttons placed next to each prediction.
    * @param cause Cause variable name
    * @param effect Effect variable name
+   * @param correlation Correlation value
    * @param vote Vote: 0 (for implausible) or 1 (for plausible)
    * @return CommonResponse
    */
-  def v1VotesPost (cause: String, effect: String, vote: Boolean) : Option[CommonResponse] = {
+  def v1VotesPost (cause: String, effect: String, correlation: Number, vote: Boolean) : Option[CommonResponse] = {
     // create path and map variables
     val path = "/v1/votes".replaceAll("\\{format\\}","json")
 
@@ -525,6 +527,7 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
 
     if(String.valueOf(cause) != "null") queryParams += "cause" -> cause.toString
     if(String.valueOf(effect) != "null") queryParams += "effect" -> effect.toString
+    if(String.valueOf(correlation) != "null") queryParams += "correlation" -> correlation.toString
     if(String.valueOf(vote) != "null") queryParams += "vote" -> vote.toString
     
     

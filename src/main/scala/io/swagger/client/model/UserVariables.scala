@@ -14,10 +14,10 @@ case class UserVariables (
   fillingValue: Integer,
   /* joinWith */
   joinWith: String,
-  /* maximumValue */
-  maximumValue: Float,
-  /* minimumValue */
-  minimumValue: Float,
+  /* maximumAllowedValue */
+  maximumAllowedValue: Float,
+  /* minimumAllowedValue */
+  minimumAllowedValue: Float,
   /* name */
   name: String,
   /* onsetDelay */

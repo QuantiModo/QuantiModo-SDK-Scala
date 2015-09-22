@@ -1,6 +1,7 @@
 package io.swagger.client.api
 
 import io.swagger.client.model.Connector
+import io.swagger.client.model.ConnectorInstruction
 import io.swagger.client.model.ConnectorInfo
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
@@ -24,8 +25,104 @@ class ConnectorsApi(val defBasePath: String = "https://localhost/api",
 
   
   /**
+   * Get embeddable connect javascript
+   * Get embeddable connect javascript. Usage:\n\n  - Embedding in applications with popups for 3rd-party authentication\nwindows.\n\n    Use `qmSetupInPopup` function after connecting `connect.js`.\n\n  - Embedding in applications with popups for 3rd-party authentication\nwindows.\n\n    Requires a selector to block. It will be embedded in this block.\n\n    Use `qmSetupOnPage` function after connecting `connect.js`.\n\n  - Embedding in mobile applications without popups for 3rd-party\nauthentication.\n\n    Use `qmSetupOnMobile` function after connecting `connect.js`.
+   * @param t User token
+   * @return void
+   */
+  def v1ConnectJsGet (t: String)  = {
+    // create path and map variables
+    val path = "/v1/connect.js".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(t) != "null") queryParams += "t" -> t.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Mobile connect page
+   * Mobile connect page
+   * @param t User token
+   * @return void
+   */
+  def v1ConnectMobileGet (t: String)  = {
+    // create path and map variables
+    val path = "/v1/connect/mobile".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(t) != "null") queryParams += "t" -> t.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
    * List of Connectors
-   * Returns a list of all available connectors. A connector pulls data from other data providers using their API or a screenscraper.
+   * A connector pulls data from other data providers using their API or a screenscraper. Returns a list of all available connectors and information about them such as their id, name, whether the user has provided access, logo url, connection instructions, and the update history.
    * @return List[Connector]
    */
   def v1ConnectorsListGet () : Option[List[Connector]] = {
@@ -111,6 +208,123 @@ class ConnectorsApi(val defBasePath: String = "https://localhost/api",
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
            
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Connection Instructions
+   * Returns instructions that describe what parameters and endpoint to use to connect to the given data provider.
+   * @param connector Lowercase system name of the source application or device. Get a list of available connectors from the /connectors/list endpoint.
+   * @param parameters JSON Array of Parameters for the request to enable connector.
+   * @param url URL which should be used to enable the connector.
+   * @param usePopup Should use popup when enabling connector
+   * @return void
+   */
+  def v1ConnectorsConnectorConnectInstructionsGet (connector: String, parameters: String, url: String, usePopup: Boolean)  = {
+    // create path and map variables
+    val path = "/v1/connectors/{connector}/connectInstructions".replaceAll("\\{format\\}","json").replaceAll("\\{" + "connector" + "\\}",apiInvoker.escape(connector))
+
+    
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(parameters) != "null") queryParams += "parameters" -> parameters.toString
+    if(String.valueOf(url) != "null") queryParams += "url" -> url.toString
+    if(String.valueOf(usePopup) != "null") queryParams += "usePopup" -> usePopup.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Connect Parameter
+   * Returns instructions that describe what parameters and endpoint to use to connect to the given data provider.
+   * @param connector Lowercase system name of the source application or device. Get a list of available connectors from the /connectors/list endpoint.
+   * @param displayName Name of the parameter that is user visible in the form
+   * @param key Name of the property that the user has to enter such as username or password Connector (used in HTTP request)
+   * @param placeholder Placeholder hint value for the parameter input tag.
+   * @param _type Type of input field such as those found here http://www.w3schools.com/tags/tag_input.asp
+   * @param usePopup Should use popup when enabling connector
+   * @param defaultValue Default parameter value
+   * @return ConnectorInstruction
+   */
+  def v1ConnectorsConnectorConnectParameterGet (connector: String, displayName: String, key: String, placeholder: String, _type: String, usePopup: Boolean, defaultValue: String) : Option[ConnectorInstruction] = {
+    // create path and map variables
+    val path = "/v1/connectors/{connector}/connectParameter".replaceAll("\\{format\\}","json").replaceAll("\\{" + "connector" + "\\}",apiInvoker.escape(connector))
+
+    
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    if(String.valueOf(defaultValue) != "null") queryParams += "defaultValue" -> defaultValue.toString
+    if(String.valueOf(displayName) != "null") queryParams += "displayName" -> displayName.toString
+    if(String.valueOf(key) != "null") queryParams += "key" -> key.toString
+    if(String.valueOf(placeholder) != "null") queryParams += "placeholder" -> placeholder.toString
+    if(String.valueOf(_type) != "null") queryParams += "type" -> _type.toString
+    if(String.valueOf(usePopup) != "null") queryParams += "usePopup" -> usePopup.toString
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           Some(ApiInvoker.deserialize(s, "", classOf[ConnectorInstruction]).asInstanceOf[ConnectorInstruction])
+         
         case _ => None
       }
     } catch {

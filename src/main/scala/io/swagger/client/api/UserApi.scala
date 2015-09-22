@@ -1,9 +1,9 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.User
 import io.swagger.client.model.UserTokenRequest
 import io.swagger.client.model.UserTokenFailedResponse
 import io.swagger.client.model.UserTokenSuccessfulResponse
+import io.swagger.client.model.User
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
 
@@ -24,53 +24,6 @@ class UserApi(val defBasePath: String = "https://localhost/api",
 
   def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value 
 
-  
-  /**
-   * Get all available units for variableGet authenticated user
-   * Returns user info for the currently authenticated user.
-   * @return User
-   */
-  def userMeGet () : Option[User] = {
-    // create path and map variables
-    val path = "/user/me".replaceAll("\\{format\\}","json")
-
-    val contentTypes = List("application/json")
-    val contentType = contentTypes(0)
-
-    // query params
-    val queryParams = new HashMap[String, String]
-    val headerParams = new HashMap[String, String]
-    val formParams = new HashMap[String, String]
-
-    
-
-    
-    
-    
-
-    var postBody: AnyRef = null
-
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
-      
-      postBody = mp
-    }
-    else {
-      
-    }
-
-    try {
-      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
-        case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[User]).asInstanceOf[User])
-         
-        case _ => None
-      }
-    } catch {
-      case ex: ApiException if ex.code == 404 => None
-      case ex: ApiException => throw ex
-    }
-  }
   
   /**
    * Get user tokens for existing users, create new users
@@ -114,6 +67,53 @@ class UserApi(val defBasePath: String = "https://localhost/api",
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
            Some(ApiInvoker.deserialize(s, "", classOf[UserTokenSuccessfulResponse]).asInstanceOf[UserTokenSuccessfulResponse])
+         
+        case _ => None
+      }
+    } catch {
+      case ex: ApiException if ex.code == 404 => None
+      case ex: ApiException => throw ex
+    }
+  }
+  
+  /**
+   * Get all available units for variableGet authenticated user
+   * Returns user info for the currently authenticated user.
+   * @return User
+   */
+  def v1UserMeGet () : Option[User] = {
+    // create path and map variables
+    val path = "/v1/user/me".replaceAll("\\{format\\}","json")
+
+    val contentTypes = List("application/json")
+    val contentType = contentTypes(0)
+
+    // query params
+    val queryParams = new HashMap[String, String]
+    val headerParams = new HashMap[String, String]
+    val formParams = new HashMap[String, String]
+
+    
+
+    
+    
+    
+
+    var postBody: AnyRef = null
+
+    if(contentType.startsWith("multipart/form-data")) {
+      val mp = new FormDataMultiPart()
+      
+      postBody = mp
+    }
+    else {
+      
+    }
+
+    try {
+      apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
+        case s: String =>
+           Some(ApiInvoker.deserialize(s, "", classOf[User]).asInstanceOf[User])
          
         case _ => None
       }

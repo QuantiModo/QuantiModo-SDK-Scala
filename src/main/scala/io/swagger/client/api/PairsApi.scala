@@ -40,9 +40,9 @@ class PairsApi(val defBasePath: String = "https://localhost/api",
    * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return List[Pairs]
    */
-  def pairsGet (cause: String, effect: String, causeSource: String, causeUnit: String, delay: String, duration: String, effectSource: String, effectUnit: String, endTime: String, startTime: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Pairs]] = {
+  def v1PairsGet (cause: String, effect: String, causeSource: String, causeUnit: String, delay: String, duration: String, effectSource: String, effectUnit: String, endTime: String, startTime: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Pairs]] = {
     // create path and map variables
-    val path = "/pairs".replaceAll("\\{format\\}","json")
+    val path = "/v1/pairs".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)

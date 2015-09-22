@@ -28,9 +28,9 @@ class UnitsApi(val defBasePath: String = "https://localhost/api",
    * Get a list of the categories of measurement units such as &#39;Distance&#39;, &#39;Duration&#39;, &#39;Energy&#39;, &#39;Frequency&#39;, &#39;Miscellany&#39;, &#39;Pressure&#39;, &#39;Proportion&#39;, &#39;Rating&#39;, &#39;Temperature&#39;, &#39;Volume&#39;, and &#39;Weight&#39;.
    * @return UnitCategory
    */
-  def unitCategoriesGet () : Option[UnitCategory] = {
+  def v1UnitCategoriesGet () : Option[UnitCategory] = {
     // create path and map variables
-    val path = "/unitCategories".replaceAll("\\{format\\}","json")
+    val path = "/v1/unitCategories".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -78,9 +78,9 @@ class UnitsApi(val defBasePath: String = "https://localhost/api",
    * @param categoryName Restrict the results to a specific unit category by providing the unit category name.
    * @return List[Unit]
    */
-  def unitsGet (unitName: String, abbreviatedUnitName: String, categoryName: String) : Option[List[Unit]] = {
+  def v1UnitsGet (unitName: String, abbreviatedUnitName: String, categoryName: String) : Option[List[Unit]] = {
     // create path and map variables
-    val path = "/units".replaceAll("\\{format\\}","json")
+    val path = "/v1/units".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -132,9 +132,9 @@ class UnitsApi(val defBasePath: String = "https://localhost/api",
    * @param variable Name of the variable you want units for
    * @return List[Unit]
    */
-  def unitsVariableGet (unitName: String, abbreviatedUnitName: String, categoryName: String, variable: String) : Option[List[Unit]] = {
+  def v1UnitsVariableGet (unitName: String, abbreviatedUnitName: String, categoryName: String, variable: String) : Option[List[Unit]] = {
     // create path and map variables
-    val path = "/unitsVariable".replaceAll("\\{format\\}","json")
+    val path = "/v1/unitsVariable".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)

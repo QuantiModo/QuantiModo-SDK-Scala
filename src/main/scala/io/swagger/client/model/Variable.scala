@@ -13,7 +13,9 @@ case class Variable (
   /* Variable category like Mood, Sleep, Physical Activity, Treatment, Symptom, etc. */
   category: String,
   /* Abbreviated name of the default unit for the variable */
-  unit: String,
+  abbreviatedUnitName: String,
+  /* Id of the default unit for the variable */
+  abbreviatedUnitId: Integer,
   /* Comma-separated list of source names to limit variables to those sources */
   sources: String,
   /* Minimum reasonable value for this variable (uses default unit) */
@@ -53,13 +55,13 @@ case class Variable (
   /* Number of measurements */
   numberOfMeasurements: Integer,
   /* Last unit */
-  lastUnit: Integer,
+  lastUnit: String,
   /* Last value */
   lastValue: Integer,
   /* Most common value */
   mostCommonValue: Integer,
   /* Most common unit */
-  mostCommonUnit: Integer,
+  mostCommonUnit: String,
   /* Last source */
   lastSource: Integer)
   

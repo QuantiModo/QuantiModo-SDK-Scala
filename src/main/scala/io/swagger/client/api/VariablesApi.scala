@@ -26,67 +26,13 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
 
   
   /**
-   * Store or Update a Correlation
-   * Store or Update a Correlation
-   * @param cause 
-   * @param effect 
-   * @param correlationcoefficient 
-   * @param vote 
-   * @return void
-   */
-  def correlationsPost (cause: String, effect: String, correlationcoefficient: String, vote: String)  = {
-    // create path and map variables
-    val path = "/correlations".replaceAll("\\{format\\}","json")
-
-    val contentTypes = List("application/json")
-    val contentType = contentTypes(0)
-
-    // query params
-    val queryParams = new HashMap[String, String]
-    val headerParams = new HashMap[String, String]
-    val formParams = new HashMap[String, String]
-
-    
-
-    if(String.valueOf(cause) != "null") queryParams += "cause" -> cause.toString
-    if(String.valueOf(effect) != "null") queryParams += "effect" -> effect.toString
-    if(String.valueOf(correlationcoefficient) != "null") queryParams += "correlationcoefficient" -> correlationcoefficient.toString
-    if(String.valueOf(vote) != "null") queryParams += "vote" -> vote.toString
-    
-    
-    
-
-    var postBody: AnyRef = null
-
-    if(contentType.startsWith("multipart/form-data")) {
-      val mp = new FormDataMultiPart()
-      
-      postBody = mp
-    }
-    else {
-      
-    }
-
-    try {
-      apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
-        case s: String =>
-           
-        case _ => None
-      }
-    } catch {
-      case ex: ApiException if ex.code == 404 => None
-      case ex: ApiException => throw ex
-    }
-  }
-  
-  /**
    * Get public variables
    * This endpoint retrieves an array of all public variables. Public variables are things like foods, medications, symptoms, conditions, and anything not unique to a particular user. For instance, a telephone number or name would not be a public variable.
    * @return Variable
    */
-  def publicVariablesGet () : Option[Variable] = {
+  def v1PublicVariablesGet () : Option[Variable] = {
     // create path and map variables
-    val path = "/public/variables".replaceAll("\\{format\\}","json")
+    val path = "/v1/public/variables".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -136,9 +82,9 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
    * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return Variable
    */
-  def publicVariablesSearchSearchGet (search: String, effectOrCause: String, limit: Integer, offset: Integer, sort: Integer) : Option[Variable] = {
+  def v1PublicVariablesSearchSearchGet (search: String, effectOrCause: String, limit: Integer, offset: Integer, sort: Integer) : Option[Variable] = {
     // create path and map variables
-    val path = "/public/variables/search/{search}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "search" + "\\}",apiInvoker.escape(search))
+    val path = "/v1/public/variables/search/{search}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "search" + "\\}",apiInvoker.escape(search))
 
     
 
@@ -236,9 +182,9 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
    * The variable categories include Activity, Causes of Illness, Cognitive Performance, Conditions, Environment, Foods, Location, Miscellaneous, Mood, Nutrition, Physical Activity, Physique, Sleep, Social Interactions, Symptoms, Treatments, Vital Signs, and Work.
    * @return List[VariableCategory]
    */
-  def variableCategoriesGet () : Option[List[VariableCategory]] = {
+  def v1VariableCategoriesGet () : Option[List[VariableCategory]] = {
     // create path and map variables
-    val path = "/variableCategories".replaceAll("\\{format\\}","json")
+    val path = "/v1/variableCategories".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -288,9 +234,9 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
    * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return Variable
    */
-  def variablesGet (userId: Integer, category: String, limit: Integer, offset: Integer, sort: Integer) : Option[Variable] = {
+  def v1VariablesGet (userId: Integer, category: String, limit: Integer, offset: Integer, sort: Integer) : Option[Variable] = {
     // create path and map variables
-    val path = "/variables".replaceAll("\\{format\\}","json")
+    val path = "/v1/variables".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -341,9 +287,9 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
    * @param variableName Original name for the variable.
    * @return void
    */
-  def variablesPost (variableName: VariablesNew)  = {
+  def v1VariablesPost (variableName: VariablesNew)  = {
     // create path and map variables
-    val path = "/variables".replaceAll("\\{format\\}","json")
+    val path = "/v1/variables".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json")
     val contentType = contentTypes(0)
@@ -392,9 +338,9 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
    * @param offset Now suppose you wanted to show results 11-20. You&#39;d set the offset to 10 and the limit to 10.
    * @return List[Variable]
    */
-  def variablesSearchSearchGet (search: String, categoryName: String, source: String, limit: Integer, offset: Integer) : Option[List[Variable]] = {
+  def v1VariablesSearchSearchGet (search: String, categoryName: String, source: String, limit: Integer, offset: Integer) : Option[List[Variable]] = {
     // create path and map variables
-    val path = "/variables/search/{search}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "search" + "\\}",apiInvoker.escape(search))
+    val path = "/v1/variables/search/{search}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "search" + "\\}",apiInvoker.escape(search))
 
     
 
@@ -446,9 +392,9 @@ class VariablesApi(val defBasePath: String = "https://localhost/api",
    * @param variableName Variable name
    * @return Variable
    */
-  def variablesVariableNameGet (variableName: String) : Option[Variable] = {
+  def v1VariablesVariableNameGet (variableName: String) : Option[Variable] = {
     // create path and map variables
-    val path = "/variables/{variableName}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "variableName" + "\\}",apiInvoker.escape(variableName))
+    val path = "/v1/variables/{variableName}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "variableName" + "\\}",apiInvoker.escape(variableName))
 
     
 
