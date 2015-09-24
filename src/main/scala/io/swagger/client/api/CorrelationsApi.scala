@@ -31,12 +31,16 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
    * Get correlations.&lt;br&gt;Supported filter parameters:&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;correlationCoefficient&lt;/b&gt; - Pearson correlation coefficient between cause and effect after lagging by onset delay and grouping by duration of action&lt;/li&gt;&lt;li&gt;&lt;b&gt;onsetDelay&lt;/b&gt; - The number of seconds which pass following a cause measurement before an effect would likely be observed.&lt;/li&gt;&lt;li&gt;&lt;b&gt;durationOfAction&lt;/b&gt; - The time in seconds over which the cause would be expected to exert a measurable effect. We have selected a default value for each variable. This default value may be replaced by a user specified by adjusting their variable user settings.&lt;/li&gt;&lt;li&gt;&lt;b&gt;lastUpdated&lt;/b&gt; - The time that this measurement was last updated in the UTC format \&quot;YYYY-MM-DDThh:mm:ss\&quot;&lt;/li&gt;&lt;/ul&gt;&lt;br&gt;
    * @param effect ORIGINAL variable name of the effect variable for which the user desires correlations
    * @param cause ORIGINAL variable name of the cause variable for which the user desires correlations
+   * @param correlationCoefficient Pearson correlation coefficient between cause and effect after lagging by onset delay and grouping by duration of action
+   * @param onsetDelay The number of seconds which pass following a cause measurement before an effect would likely be observed.
+   * @param durationOfAction The time in seconds over which the cause would be expected to exert a measurable effect. We have selected a default value for each variable. This default value may be replaced by a user specified by adjusting their variable user settings.
+   * @param lastUpdated The time that this measurement was last updated in the UTC format \&quot;YYYY-MM-DDThh:mm:ss\&quot;
    * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0.
    * @param offset Now suppose you wanted to show results 11-20. You&#39;d set the offset to 10 and the limit to 10.
    * @param sort Sort by given field. If the field is prefixed with `-, it will sort in descending order.
    * @return List[Correlation]
    */
-  def v1CorrelationsGet (effect: String, cause: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Correlation]] = {
+  def v1CorrelationsGet (effect: String, cause: String, correlationCoefficient: String, onsetDelay: String, durationOfAction: String, lastUpdated: String, limit: Integer, offset: Integer, sort: Integer) : Option[List[Correlation]] = {
     // create path and map variables
     val path = "/v1/correlations".replaceAll("\\{format\\}","json")
 
@@ -52,6 +56,10 @@ class CorrelationsApi(val defBasePath: String = "https://localhost/api",
 
     if(String.valueOf(effect) != "null") queryParams += "effect" -> effect.toString
     if(String.valueOf(cause) != "null") queryParams += "cause" -> cause.toString
+    if(String.valueOf(correlationCoefficient) != "null") queryParams += "correlationCoefficient" -> correlationCoefficient.toString
+    if(String.valueOf(onsetDelay) != "null") queryParams += "onsetDelay" -> onsetDelay.toString
+    if(String.valueOf(durationOfAction) != "null") queryParams += "durationOfAction" -> durationOfAction.toString
+    if(String.valueOf(lastUpdated) != "null") queryParams += "lastUpdated" -> lastUpdated.toString
     if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
     if(String.valueOf(offset) != "null") queryParams += "offset" -> offset.toString
     if(String.valueOf(sort) != "null") queryParams += "sort" -> sort.toString

@@ -26,11 +26,12 @@ class ConnectorsApi(val defBasePath: String = "https://localhost/api",
   
   /**
    * Get embeddable connect javascript
-   * Get embeddable connect javascript. Usage:\n\n  - Embedding in applications with popups for 3rd-party authentication\nwindows.\n\n    Use `qmSetupInPopup` function after connecting `connect.js`.\n\n  - Embedding in applications with popups for 3rd-party authentication\nwindows.\n\n    Requires a selector to block. It will be embedded in this block.\n\n    Use `qmSetupOnPage` function after connecting `connect.js`.\n\n  - Embedding in mobile applications without popups for 3rd-party\nauthentication.\n\n    Use `qmSetupOnMobile` function after connecting `connect.js`.
-   * @param t User token
+   * Get embeddable connect javascript. Usage:\n\n  - Embedding in applications with popups for 3rd-party authentication\nwindows.\n\n    Use `qmSetupInPopup` function after connecting `connect.js`.\n\n  - Embedding in applications with popups for 3rd-party authentication\nwindows.\n\n    Requires a selector to block. It will be embedded in this block.\n\n    Use `qmSetupOnPage` function after connecting `connect.js`.\n\n  - Embedding in mobile applications without popups for 3rd-party\nauthentication.\n\n    Use `qmSetupOnMobile` function after connecting `connect.js`.\n\n    if using the MoodiModo Clones, Use `qmSetupOnIonic` function after connecting `connect.js`.
+   * @param access token User&#39;s access token
+   * @param mashape key Mashape API key
    * @return void
    */
-  def v1ConnectJsGet (t: String)  = {
+  def v1ConnectJsGet (access token: String, mashape key: String)  = {
     // create path and map variables
     val path = "/v1/connect.js".replaceAll("\\{format\\}","json")
 
@@ -44,7 +45,8 @@ class ConnectorsApi(val defBasePath: String = "https://localhost/api",
 
     
 
-    if(String.valueOf(t) != "null") queryParams += "t" -> t.toString
+    if(String.valueOf(access token) != "null") queryParams += "access token" -> access token.toString
+    if(String.valueOf(mashape key) != "null") queryParams += "mashape key" -> mashape key.toString
     
     
     
