@@ -4,11 +4,15 @@ import org.joda.time.DateTime
 
 
 
-case class UnitCategory (
+case class MeasurementExport (
   /* id */
   id: Integer,
-  /* Unit category name */
-  name: String,
+  /* ID of User */
+  user_id: Integer,
+  /* Status of Measurement Export */
+  status: String,
+  /* Error message */
+  error_message: String,
   /* created_at */
   created_at: DateTime,
   /* updated_at */

@@ -1,67 +1,80 @@
 package io.swagger.client.model
 
+import org.joda.time.DateTime
 
 
 
 case class Variable (
-  /* Variable ID */
+  /* id */
   id: Integer,
-  /* User-defined variable display name. */
+  /* client_id */
+  client_id: String,
+  /* parent_id */
+  parent_id: Integer,
+  /* Name of the variable */
   name: String,
-  /* Name used when the variable was originally created in the `variables` table. */
-  originalName: String,
-  /* Variable category like Mood, Sleep, Physical Activity, Treatment, Symptom, etc. */
-  category: String,
-  /* Abbreviated name of the default unit for the variable */
-  abbreviatedUnitName: String,
-  /* Id of the default unit for the variable */
-  abbreviatedUnitId: Integer,
-  /* Comma-separated list of source names to limit variables to those sources */
-  sources: String,
-  /* Minimum reasonable value for this variable (uses default unit) */
-  minimumValue: Double,
-  /* Maximum reasonable value for this variable (uses default unit) */
-  maximumValue: Double,
-  /* How to aggregate measurements over time. */
-  combinationOperation: String,
-  /* Value for replacing null measurements */
-  fillingValue: Double,
-  /* The Variable this Variable should be joined with. If the variable is joined with some other variable then it is not shown to user in the list of variables. */
-  joinWith: String,
-  /* Array of Variables that are joined with this Variable */
-  joinedVariables: List[Variable],
-  /* Id of the parent variable if this variable has any parent */
-  parent: Integer,
-  /* Array of Variables that are sub variables to this Variable */
-  subVariables: List[Variable],
-  /* How long it takes for a measurement in this variable to take effect */
-  onsetDelay: Integer,
-  /* How long the effect of a measurement in this variable lasts */
-  durationOfAction: Integer,
-  /* Earliest measurement time */
-  earliestMeasurementTime: Integer,
-  /* Latest measurement time */
-  latestMeasurementTime: Integer,
-  /* When this variable or its settings were last updated */
-  updated: Integer,
-  /* A value of 1 indicates that this variable is generally a cause in a causal relationship.  An example of a causeOnly variable would be a variable such as Cloud Cover which would generally not be influenced by the behaviour of the user. */
-  causeOnly: Integer,
-  /* Number of correlations */
-  numberOfCorrelations: Integer,
-  /* Outcome variables (those with `outcome` == 1) are variables for which a human would generally want to identify the influencing factors.  These include symptoms of illness, physique, mood, cognitive performance, etc.  Generally correlation calculations are only performed on outcome variables. */
-  outcome: Integer,
-  /* The number of measurements that a given user had for this variable the last time a correlation calculation was performed. Generally correlation values are only updated once the current number of measurements for a variable is more than 10% greater than the measurementsAtLastAnalysis.  This avoids a computationally-demanding recalculation when there's not enough new data to make a significant difference in the correlation. */
-  measurementsAtLastAnalysis: Integer,
-  /* Number of measurements */
-  numberOfMeasurements: Integer,
-  /* Last unit */
-  lastUnit: String,
-  /* Last value */
-  lastValue: Integer,
-  /* Most common value */
-  mostCommonValue: Integer,
-  /* Most common unit */
-  mostCommonUnit: String,
-  /* Last source */
-  lastSource: Integer)
+  /* Category of the variable */
+  variable_category_id: Integer,
+  /* ID of the default unit of measurement to use for this variable */
+  default_unit_id: Integer,
+  /* How to combine values of this variable (for instance, to see a summary of the values over a month) 0 for sum OR 1 for mean */
+  combination_operation: String,
+  /* filling_value */
+  filling_value: Float,
+  /* maximum_allowed_value */
+  maximum_allowed_value: Float,
+  /* minimum_allowed_value */
+  minimum_allowed_value: Float,
+  /* onset_delay */
+  onset_delay: Integer,
+  /* duration_of_action */
+  duration_of_action: Integer,
+  /* public */
+  public: Integer,
+  /* cause_only */
+  cause_only: Boolean,
+  /* most_common_value */
+  most_common_value: Float,
+  /* most_common_unit_id */
+  most_common_unit_id: Integer,
+  /* standard_deviation */
+  standard_deviation: Float,
+  /* variance */
+  variance: Float,
+  /* mean */
+  mean: Float,
+  /* median */
+  median: Float,
+  /* number_of_measurements */
+  number_of_measurements: Float,
+  /* number_of_unique_values */
+  number_of_unique_values: Float,
+  /* skewness */
+  skewness: Float,
+  /* kurtosis */
+  kurtosis: Float,
+  /* status */
+  status: String,
+  /* error_message */
+  error_message: String,
+  /* last_successful_update_time */
+  last_successful_update_time: DateTime,
+  /* created_at */
+  created_at: DateTime,
+  /* updated_at */
+  updated_at: DateTime,
+  /* product_url */
+  product_url: String,
+  /* image_url */
+  image_url: String,
+  /* price */
+  price: Float,
+  /* number_of_user_variables */
+  number_of_user_variables: Integer,
+  /* outcome */
+  outcome: Boolean,
+  /* minimum_recorded_value */
+  minimum_recorded_value: Float,
+  /* maximum_recorded_value */
+  maximum_recorded_value: Float)
   

@@ -4,10 +4,12 @@ import org.joda.time.DateTime
 
 
 
-case class UnitCategory (
+case class Source (
   /* id */
   id: Integer,
-  /* Unit category name */
+  /* client_id */
+  client_id: String,
+  /* Name of the application or device */
   name: String,
   /* created_at */
   created_at: DateTime,

@@ -4,11 +4,13 @@ import org.joda.time.DateTime
 
 
 
-case class UnitCategory (
-  /* id */
-  id: Integer,
-  /* Unit category name */
-  name: String,
+case class Credential (
+  /* connector_id */
+  connector_id: Integer,
+  /* attr_key */
+  attr_key: String,
+  /* attr_value */
+  attr_value: String,
   /* created_at */
   created_at: DateTime,
   /* updated_at */

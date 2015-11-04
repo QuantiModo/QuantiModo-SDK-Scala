@@ -1,33 +1,46 @@
 package io.swagger.client.model
 
+import org.joda.time.DateTime
 
 
 
 case class Measurement (
-  /* ORIGINAL Name of the variable for which we are creating the measurement records */
-  variable: String,
+  /* id */
+  id: Integer,
+  /* ID of user that owns this measurement */
+  user_id: Integer,
+  /* client_id */
+  client_id: String,
+  /* Connector ID */
+  connector_id: Integer,
+  /* ID of the variable for which we are creating the measurement records */
+  variable_id: Integer,
   /* Application or device used to record the measurement values */
-  source: String,
-  /* Timestamp for the measurement event in epoch time */
-  timestamp: Long,
+  source_id: Integer,
   /* Start Time for the measurement event in ISO 8601 */
-  startTime: String,
-  /* Start Time for the measurement event in ISO 8601 */
-  humanTime: HumanTime,
+  start_time: Integer,
   /* Converted measurement value in requested unit */
-  value: Double,
-  /* Unit of measurement as requested in GET request */
-  unit: String,
+  value: Float,
+  /* Unit ID of measurement as requested in GET request */
+  unit_id: Integer,
   /* Original value */
-  originalValue: Integer,
-  /* Measurement value in the unit as orignally submitted */
-  storedValue: Double,
-  /* Unit of measurement as originally submitted */
-  storedAbbreviatedUnitName: String,
-  /* Original Unit of measurement as originally submitted */
-  originalAbbreviatedUnitName: String,
-  /* Unit of measurement as originally submitted */
-  abbreviatedUnitName: String,
+  original_value: Float,
+  /* Unit ID of measurement as originally submitted */
+  original_unit_id: Integer,
+  /* duration of measurement in seconds */
+  duration: Integer,
   /* Note of measurement */
-  note: String)
+  note: String,
+  /* latitude */
+  latitude: Float,
+  /* longitude */
+  longitude: Float,
+  /* location */
+  location: String,
+  /* created_at */
+  created_at: DateTime,
+  /* updated_at */
+  updated_at: DateTime,
+  /* error */
+  error: String)
   

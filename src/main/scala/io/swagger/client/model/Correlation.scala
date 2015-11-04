@@ -1,51 +1,56 @@
 package io.swagger.client.model
 
+import org.joda.time.DateTime
 
 
 
 case class Correlation (
-  /* Pearson correlation coefficient between cause and effect measurements */
-  correlationCoefficient: Number,
-  /* ORIGINAL variable name of the cause variable for which the user desires correlations. */
-  cause: String,
-  /* original name of the cause. */
-  originalCause: String,
-  /* ORIGINAL variable name of the effect variable for which the user desires correlations. */
-  effect: String,
-  /* effect variable original name. */
-  originalEffect: String,
-  /* User estimated or default time after cause measurement before a perceivable effect is observed */
-  onsetDelay: Double,
-  /* Time over which the cause is expected to produce a perceivable effect following the onset delay */
-  durationOfAction: Number,
-  /* Number of points that went into the correlation calculation */
-  numberOfPairs: Number,
-  /* Magnitude of the effects of a cause indicating whether it's practically meaningful. */
-  effectSize: String,
-  /* A function of the effect size and sample size */
-  statisticalSignificance: String,
+  /* id */
+  id: Integer,
   /* Time at which correlation was calculated */
-  timestamp: Number,
-  /* Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation. */
-  reverseCorrelation: Number,
-  /*  */
-  causalityFactor: Number,
-  /* Variable category of the cause variable. */
-  causeCategory: String,
-  /* Variable category of the effect variable. */
-  effectCategory: String,
+  timestamp: Integer,
+  /* ID of user that owns this correlation */
+  user_id: Integer,
+  /* Pearson correlation coefficient between cause and effect measurements */
+  correlation: Float,
+  /* variable ID of the cause variable for which the user desires correlations */
+  cause_id: Integer,
+  /* variable ID of the effect variable for which the user desires correlations */
+  effect_id: Integer,
+  /* User estimated or default time after cause measurement before a perceivable effect is observed */
+  onset_delay: Integer,
+  /* Time over which the cause is expected to produce a perceivable effect following the onset delay */
+  duration_of_action: Integer,
+  /* Number of points that went into the correlation calculation */
+  number_of_pairs: Integer,
   /* cause value that predicts an above average effect value (in default unit for cause variable) */
-  valuePredictingHighOutcome: Number,
+  value_predicting_high_outcome: Float,
   /* cause value that predicts a below average effect value (in default unit for cause variable) */
-  valuePredictingLowOutcome: Number,
+  value_predicting_low_outcome: Float,
   /* Optimal Pearson Product */
-  optimalPearsonProduct: Number,
-  /* Average Vote */
-  averageVote: Number,
-  /* User Vote */
-  userVote: Number,
+  optimal_pearson_product: Float,
+  /* Vote */
+  vote: Float,
+  /* A function of the effect size and sample size */
+  statistical_significance: Float,
   /* Unit of Cause */
-  causeUnit: String,
-  /* Unit Id of Cause */
-  causeUnitId: Integer)
+  cause_unit: String,
+  /* Unit ID of Cause */
+  cause_unit_id: Integer,
+  /* Cause changes */
+  cause_changes: Integer,
+  /* Effect changes */
+  effect_changes: Integer,
+  /* QM Score */
+  qm_score: Float,
+  /* error */
+  error: String,
+  /* created_at */
+  created_at: DateTime,
+  /* updated_at */
+  updated_at: DateTime,
+  /* Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation */
+  reverse_pearson_correlation_coefficient: Float,
+  /* Predictive Pearson Correlation Coefficient */
+  predictive_pearson_correlation_coefficient: Float)
   
