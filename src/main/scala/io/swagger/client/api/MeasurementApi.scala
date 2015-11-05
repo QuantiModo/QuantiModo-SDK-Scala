@@ -161,7 +161,7 @@ class MeasurementApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   
   /**
    * Get Measurements CSV
-   * Get Measurements CSV
+   * Download a CSV containing all user measurements
    * @return File
    */
   def measurementsCsvGet () : Option[File] = {
@@ -208,7 +208,7 @@ class MeasurementApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   
   /**
    * Post Request for Measurements CSV
-   * Post Request for Measurements CSV
+   * Use this endpoint to schedule a CSV export containing all user measurements to be emailed to the user within 24 hours.
    * @return Integer
    */
   def measurementsRequestCsvPost () : Option[Integer] = {
