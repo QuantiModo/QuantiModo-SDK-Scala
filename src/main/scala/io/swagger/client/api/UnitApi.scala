@@ -1,8 +1,8 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.Inline_response_200_17
+import io.swagger.client.model.Inline_response_200_26
 import io.swagger.client.model.Number
-import io.swagger.client.model.Inline_response_200_18
+import io.swagger.client.model.Inline_response_200_27
 import io.swagger.client.model.Unit
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
@@ -27,25 +27,27 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
   
   /**
-   * Get all Units
-   * Get all Units
-   * @param clientId client_id
-   * @param name name
-   * @param abbreviatedName abbreviated_name
-   * @param categoryId category_id
-   * @param minimumValue minimum_value
-   * @param maximumValue maximum_value
+   * Get all available units
+   * Get all available units
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param clientId The ID of the client application which last created or updated this unit
+   * @param name Unit name
+   * @param abbreviatedName Unit abbreviation
+   * @param categoryId Unit category ID
+   * @param minimumValue Minimum value permitted for this unit
+   * @param maximumValue Maximum value permitted for this unit
    * @param updated updated
-   * @param multiply multiply
-   * @param add add
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
-   * @return Inline_response_200_17
+   * @param defaultUnitId ID of default unit for this units category
+   * @param multiply Value multiplied to convert to default unit in this unit category
+   * @param add Value which should be added to convert to default unit
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
+   * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
+   * @param sort Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.
+   * @return Inline_response_200_26
    */
-  def unitsGet (clientId: String, name: String, abbreviatedName: String, categoryId: Boolean, minimumValue: Number, maximumValue: Number, updated: Integer, multiply: Number, add: Number, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_17] = {
+  def unitsGet (accessToken: String, clientId: String, name: String, abbreviatedName: String, categoryId: Integer, minimumValue: Number, maximumValue: Number, updated: Integer, defaultUnitId: Integer, multiply: Number, add: Number, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_26] = {
     // create path and map variables
     val path = "/units".replaceAll("\\{format\\}","json")
 
@@ -59,6 +61,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(clientId) != "null") queryParams += "client_id" -> clientId.toString
     if(String.valueOf(name) != "null") queryParams += "name" -> name.toString
     if(String.valueOf(abbreviatedName) != "null") queryParams += "abbreviated_name" -> abbreviatedName.toString
@@ -66,6 +69,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     if(String.valueOf(minimumValue) != "null") queryParams += "minimum_value" -> minimumValue.toString
     if(String.valueOf(maximumValue) != "null") queryParams += "maximum_value" -> maximumValue.toString
     if(String.valueOf(updated) != "null") queryParams += "updated" -> updated.toString
+    if(String.valueOf(defaultUnitId) != "null") queryParams += "default_unit_id" -> defaultUnitId.toString
     if(String.valueOf(multiply) != "null") queryParams += "multiply" -> multiply.toString
     if(String.valueOf(add) != "null") queryParams += "add" -> add.toString
     if(String.valueOf(createdAt) != "null") queryParams += "created_at" -> createdAt.toString
@@ -91,7 +95,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_17]).asInstanceOf[Inline_response_200_17])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_26]).asInstanceOf[Inline_response_200_26])
          
         case _ => None
       }
@@ -104,10 +108,11 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Store Unit
    * Store Unit
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Unit that should be stored
-   * @return Inline_response_200_18
+   * @return Inline_response_200_27
    */
-  def unitsPost (body: Unit) : Option[Inline_response_200_18] = {
+  def unitsPost (accessToken: String, body: Unit) : Option[Inline_response_200_27] = {
     // create path and map variables
     val path = "/units".replaceAll("\\{format\\}","json")
 
@@ -121,6 +126,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -139,7 +145,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_18]).asInstanceOf[Inline_response_200_18])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_27]).asInstanceOf[Inline_response_200_27])
          
         case _ => None
       }
@@ -153,9 +159,10 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Get Unit
    * Get Unit
    * @param id id of Unit
-   * @return Inline_response_200_18
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_27
    */
-  def unitsIdGet (id: Integer) : Option[Inline_response_200_18] = {
+  def unitsIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_27] = {
     // create path and map variables
     val path = "/units/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -171,6 +178,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -189,7 +197,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_18]).asInstanceOf[Inline_response_200_18])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_27]).asInstanceOf[Inline_response_200_27])
          
         case _ => None
       }
@@ -203,10 +211,11 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Update Unit
    * Update Unit
    * @param id id of Unit
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Unit that should be updated
    * @return Inline_response_200_2
    */
-  def unitsIdPut (id: Integer, body: Unit) : Option[Inline_response_200_2] = {
+  def unitsIdPut (id: Integer, accessToken: String, body: Unit) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/units/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -222,6 +231,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -254,9 +264,10 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Delete Unit
    * Delete Unit
    * @param id id of Unit
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def unitsIdDelete (id: Integer) : Option[Inline_response_200_2] = {
+  def unitsIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/units/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -272,6 +283,7 @@ class UnitApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     

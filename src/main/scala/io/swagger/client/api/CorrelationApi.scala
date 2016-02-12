@@ -1,8 +1,8 @@
 package io.swagger.client.api
 
+import io.swagger.client.model.Inline_response_200_17
 import io.swagger.client.model.Number
-import io.swagger.client.model.Inline_response_200_7
-import io.swagger.client.model.Inline_response_200_8
+import io.swagger.client.model.Inline_response_200_18
 import io.swagger.client.model.Correlation
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
@@ -29,35 +29,36 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Get all Correlations
    * Get all Correlations
-   * @param timestamp timestamp
-   * @param userId user_id
-   * @param correlation correlation
-   * @param causeId cause_id
-   * @param effectId effect_id
-   * @param onsetDelay onset_delay
-   * @param durationOfAction duration_of_action
-   * @param numberOfPairs number_of_pairs
-   * @param valuePredictingHighOutcome value_predicting_high_outcome
-   * @param valuePredictingLowOutcome value_predicting_low_outcome
-   * @param optimalPearsonProduct optimal_pearson_product
-   * @param vote vote
-   * @param statisticalSignificance statistical_significance
-   * @param causeUnit cause_unit
-   * @param causeUnitId cause_unit_id
-   * @param causeChanges cause_changes
-   * @param effectChanges effect_changes
-   * @param qmScore qm_score
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param timestamp Time at which correlation was calculated
+   * @param userId ID of user that owns this correlation
+   * @param correlation Pearson correlation coefficient between cause and effect measurements
+   * @param causeId variable ID of the predictor variable for which the user desires correlations
+   * @param effectId variable ID of the outcome variable for which the user desires correlations
+   * @param onsetDelay User estimated or default time after cause measurement before a perceivable effect is observed
+   * @param durationOfAction Time over which the cause is expected to produce a perceivable effect following the onset delay
+   * @param numberOfPairs Number of points that went into the correlation calculation
+   * @param valuePredictingHighOutcome cause value that predicts an above average effect value (in default unit for predictor variable)
+   * @param valuePredictingLowOutcome cause value that predicts a below average effect value (in default unit for predictor variable)
+   * @param optimalPearsonProduct Optimal Pearson Product
+   * @param vote Vote
+   * @param statisticalSignificance A function of the effect size and sample size
+   * @param causeUnit Unit of the predictor variable
+   * @param causeUnitId Unit ID of the predictor variable
+   * @param causeChanges Cause changes
+   * @param effectChanges Effect changes
+   * @param qmScore QM Score
    * @param error error
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param reversePearsonCorrelationCoefficient reverse_pearson_correlation_coefficient
-   * @param predictivePearsonCorrelationCoefficient predictive_pearson_correlation_coefficient
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
-   * @return Inline_response_200_7
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record in the database was last updated. Use ISO 8601 datetime format
+   * @param reversePearsonCorrelationCoefficient Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation
+   * @param predictivePearsonCorrelationCoefficient Predictive Pearson Correlation Coefficient
+   * @param limit Limit the number of results returned
+   * @param offset Records from give Offset
+   * @param sort Sort records by given field
+   * @return Inline_response_200_17
    */
-  def correlationsGet (timestamp: Integer, userId: Integer, correlation: Number, causeId: Integer, effectId: Integer, onsetDelay: Integer, durationOfAction: Integer, numberOfPairs: Integer, valuePredictingHighOutcome: Number, valuePredictingLowOutcome: Number, optimalPearsonProduct: Number, vote: Number, statisticalSignificance: Number, causeUnit: String, causeUnitId: Integer, causeChanges: Integer, effectChanges: Integer, qmScore: Number, error: String, createdAt: String, updatedAt: String, reversePearsonCorrelationCoefficient: Number, predictivePearsonCorrelationCoefficient: Number, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_7] = {
+  def correlationsGet (accessToken: String, timestamp: Integer, userId: Integer, correlation: Number, causeId: Integer, effectId: Integer, onsetDelay: Integer, durationOfAction: Integer, numberOfPairs: Integer, valuePredictingHighOutcome: Number, valuePredictingLowOutcome: Number, optimalPearsonProduct: Number, vote: Number, statisticalSignificance: Number, causeUnit: String, causeUnitId: Integer, causeChanges: Integer, effectChanges: Integer, qmScore: Number, error: String, createdAt: String, updatedAt: String, reversePearsonCorrelationCoefficient: Number, predictivePearsonCorrelationCoefficient: Number, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_17] = {
     // create path and map variables
     val path = "/correlations".replaceAll("\\{format\\}","json")
 
@@ -71,6 +72,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(timestamp) != "null") queryParams += "timestamp" -> timestamp.toString
     if(String.valueOf(userId) != "null") queryParams += "user_id" -> userId.toString
     if(String.valueOf(correlation) != "null") queryParams += "correlation" -> correlation.toString
@@ -115,7 +117,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_7]).asInstanceOf[Inline_response_200_7])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_17]).asInstanceOf[Inline_response_200_17])
          
         case _ => None
       }
@@ -128,10 +130,11 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Store Correlation
    * Store Correlation
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Correlation that should be stored
-   * @return Inline_response_200_8
+   * @return Inline_response_200_18
    */
-  def correlationsPost (body: Correlation) : Option[Inline_response_200_8] = {
+  def correlationsPost (accessToken: String, body: Correlation) : Option[Inline_response_200_18] = {
     // create path and map variables
     val path = "/correlations".replaceAll("\\{format\\}","json")
 
@@ -145,6 +148,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -163,7 +167,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_8]).asInstanceOf[Inline_response_200_8])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_18]).asInstanceOf[Inline_response_200_18])
          
         case _ => None
       }
@@ -174,12 +178,13 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   }
   
   /**
-   * Get Correlation
+   * Get Correlation Details
    * Get Correlation
    * @param id id of Correlation
-   * @return Inline_response_200_8
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_18
    */
-  def correlationsIdGet (id: Integer) : Option[Inline_response_200_8] = {
+  def correlationsIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_18] = {
     // create path and map variables
     val path = "/correlations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -195,6 +200,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -213,7 +219,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_8]).asInstanceOf[Inline_response_200_8])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_18]).asInstanceOf[Inline_response_200_18])
          
         case _ => None
       }
@@ -227,10 +233,11 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Update Correlation
    * Update Correlation
    * @param id id of Correlation
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Correlation that should be updated
    * @return Inline_response_200_2
    */
-  def correlationsIdPut (id: Integer, body: Correlation) : Option[Inline_response_200_2] = {
+  def correlationsIdPut (id: Integer, accessToken: String, body: Correlation) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/correlations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -246,6 +253,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -278,9 +286,10 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Delete Correlation
    * Delete Correlation
    * @param id id of Correlation
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def correlationsIdDelete (id: Integer) : Option[Inline_response_200_2] = {
+  def correlationsIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/correlations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -296,6 +305,7 @@ class CorrelationApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     

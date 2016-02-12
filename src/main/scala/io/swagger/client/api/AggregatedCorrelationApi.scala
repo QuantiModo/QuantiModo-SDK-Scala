@@ -29,37 +29,37 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
   /**
    * Get all AggregatedCorrelations
    * Get all AggregatedCorrelations
-   * @param correlation correlation
-   * @param causeId cause_id
-   * @param effectId effect_id
-   * @param onsetDelay onset_delay
-   * @param durationOfAction duration_of_action
-   * @param numberOfPairs number_of_pairs
-   * @param valuePredictingHighOutcome value_predicting_high_outcome
-   * @param valuePredictingLowOutcome value_predicting_low_outcome
-   * @param optimalPearsonProduct optimal_pearson_product
-   * @param vote vote
-   * @param numberOfUsers number_of_users
-   * @param numberOfCorrelations number_of_correlations
-   * @param statisticalSignificance statistical_significance
-   * @param causeUnit cause_unit
-   * @param causeUnitId cause_unit_id
-   * @param causeChanges cause_changes
-   * @param effectChanges effect_changes
-   * @param aggregateQmScore aggregate_qm_score
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param status status
-   * @param errorMessage error_message
-   * @param lastSuccessfulUpdateTime last_successful_update_time
-   * @param reversePearsonCorrelationCoefficient reverse_pearson_correlation_coefficient
-   * @param predictivePearsonCorrelationCoefficient predictive_pearson_correlation_coefficient
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param correlation Pearson correlation coefficient between cause and effect measurements
+   * @param causeId Variable ID of the predictor variable for which the user desires correlations
+   * @param effectId Variable ID of the outcome variable for which the user desires correlations
+   * @param onsetDelay User estimated (or default number of seconds) after cause measurement before a perceivable effect is observed
+   * @param durationOfAction Number of seconds over which the predictor variable event is expected to produce a perceivable effect following the onset delay
+   * @param numberOfPairs Number of predictor/outcome data points used in the analysis
+   * @param valuePredictingHighOutcome Predictor daily aggregated measurement value that predicts an above average effect measurement value (in default unit for predictor variable)
+   * @param valuePredictingLowOutcome Predictor daily aggregated measurement value that predicts a below average effect measurement value (in default unit for outcome variable)
+   * @param optimalPearsonProduct Optimal Pearson Product
+   * @param numberOfUsers Number of users whose data was used in this aggregation
+   * @param numberOfCorrelations Number of correlational analyses used in this aggregation
+   * @param statisticalSignificance A function of the effect size and sample size
+   * @param causeUnit Abbreviated unit name for the predictor variable
+   * @param causeUnitId Unit ID for the predictor variable
+   * @param causeChanges Number of times that the predictor time series changes
+   * @param effectChanges Number of times that the predictor time series changes
+   * @param aggregateQmScore Aggregated QM Score which is directly proportional with the relevance of each predictor or outcome
+   * @param createdAt Date at which the analysis was first performed
+   * @param updatedAt Date at which the analysis was last updated
+   * @param status Indicates whether an analysis is up to date (UPDATED), needs to be updated (WAITING), or had an error (ERROR)
+   * @param errorMessage Message describing any problems encountered during the analysis
+   * @param lastSuccessfulUpdateTime Last Successful update time
+   * @param reversePearsonCorrelationCoefficient Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation
+   * @param predictivePearsonCorrelationCoefficient Predictive Pearson Correlation Coefficient
+   * @param limit Limit the number of results returned
+   * @param offset Records from give Offset
+   * @param sort Sort records by given field
    * @return Inline_response_200
    */
-  def aggregatedCorrelationsGet (correlation: Number, causeId: Integer, effectId: Integer, onsetDelay: Integer, durationOfAction: Integer, numberOfPairs: Integer, valuePredictingHighOutcome: Number, valuePredictingLowOutcome: Number, optimalPearsonProduct: Number, vote: Number, numberOfUsers: Integer, numberOfCorrelations: Integer, statisticalSignificance: Number, causeUnit: String, causeUnitId: Integer, causeChanges: Integer, effectChanges: Integer, aggregateQmScore: Number, createdAt: String, updatedAt: String, status: String, errorMessage: String, lastSuccessfulUpdateTime: String, reversePearsonCorrelationCoefficient: Number, predictivePearsonCorrelationCoefficient: Number, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200] = {
+  def aggregatedCorrelationsGet (accessToken: String, correlation: Number, causeId: Integer, effectId: Integer, onsetDelay: Integer, durationOfAction: Integer, numberOfPairs: Integer, valuePredictingHighOutcome: Number, valuePredictingLowOutcome: Number, optimalPearsonProduct: Number, numberOfUsers: Integer, numberOfCorrelations: Integer, statisticalSignificance: Number, causeUnit: String, causeUnitId: Integer, causeChanges: Integer, effectChanges: Integer, aggregateQmScore: Number, createdAt: String, updatedAt: String, status: String, errorMessage: String, lastSuccessfulUpdateTime: String, reversePearsonCorrelationCoefficient: Number, predictivePearsonCorrelationCoefficient: Number, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200] = {
     // create path and map variables
     val path = "/aggregatedCorrelations".replaceAll("\\{format\\}","json")
 
@@ -73,6 +73,7 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(correlation) != "null") queryParams += "correlation" -> correlation.toString
     if(String.valueOf(causeId) != "null") queryParams += "cause_id" -> causeId.toString
     if(String.valueOf(effectId) != "null") queryParams += "effect_id" -> effectId.toString
@@ -82,7 +83,6 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
     if(String.valueOf(valuePredictingHighOutcome) != "null") queryParams += "value_predicting_high_outcome" -> valuePredictingHighOutcome.toString
     if(String.valueOf(valuePredictingLowOutcome) != "null") queryParams += "value_predicting_low_outcome" -> valuePredictingLowOutcome.toString
     if(String.valueOf(optimalPearsonProduct) != "null") queryParams += "optimal_pearson_product" -> optimalPearsonProduct.toString
-    if(String.valueOf(vote) != "null") queryParams += "vote" -> vote.toString
     if(String.valueOf(numberOfUsers) != "null") queryParams += "number_of_users" -> numberOfUsers.toString
     if(String.valueOf(numberOfCorrelations) != "null") queryParams += "number_of_correlations" -> numberOfCorrelations.toString
     if(String.valueOf(statisticalSignificance) != "null") queryParams += "statistical_significance" -> statisticalSignificance.toString
@@ -132,10 +132,11 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
   /**
    * Store AggregatedCorrelation
    * Store AggregatedCorrelation
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body AggregatedCorrelation that should be stored
    * @return Inline_response_200_1
    */
-  def aggregatedCorrelationsPost (body: AggregatedCorrelation) : Option[Inline_response_200_1] = {
+  def aggregatedCorrelationsPost (accessToken: String, body: AggregatedCorrelation) : Option[Inline_response_200_1] = {
     // create path and map variables
     val path = "/aggregatedCorrelations".replaceAll("\\{format\\}","json")
 
@@ -149,6 +150,7 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -181,9 +183,10 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
    * Get AggregatedCorrelation
    * Get AggregatedCorrelation
    * @param id id of AggregatedCorrelation
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_1
    */
-  def aggregatedCorrelationsIdGet (id: Integer) : Option[Inline_response_200_1] = {
+  def aggregatedCorrelationsIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_1] = {
     // create path and map variables
     val path = "/aggregatedCorrelations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -199,6 +202,7 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -231,10 +235,11 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
    * Update AggregatedCorrelation
    * Update AggregatedCorrelation
    * @param id id of AggregatedCorrelation
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body AggregatedCorrelation that should be updated
    * @return Inline_response_200_2
    */
-  def aggregatedCorrelationsIdPut (id: Integer, body: AggregatedCorrelation) : Option[Inline_response_200_2] = {
+  def aggregatedCorrelationsIdPut (id: Integer, accessToken: String, body: AggregatedCorrelation) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/aggregatedCorrelations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -250,6 +255,7 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -282,9 +288,10 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
    * Delete AggregatedCorrelation
    * Delete AggregatedCorrelation
    * @param id id of AggregatedCorrelation
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def aggregatedCorrelationsIdDelete (id: Integer) : Option[Inline_response_200_2] = {
+  def aggregatedCorrelationsIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/aggregatedCorrelations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -300,6 +307,7 @@ class AggregatedCorrelationApi(val defBasePath: String = "https://app.quantimo.d
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     

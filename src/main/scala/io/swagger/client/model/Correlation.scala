@@ -33,9 +33,9 @@ case class Correlation (
   vote: Float,
   /* A function of the effect size and sample size */
   statistical_significance: Float,
-  /* Unit of Cause */
+  /* Unit of the predictor variable */
   cause_unit: String,
-  /* Unit ID of Cause */
+  /* Unit ID of the predictor variable */
   cause_unit_id: Integer,
   /* Cause changes */
   cause_changes: Integer,
@@ -45,9 +45,9 @@ case class Correlation (
   qm_score: Float,
   /* error */
   error: String,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime,
   /* Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation */
   reverse_pearson_correlation_coefficient: Float,

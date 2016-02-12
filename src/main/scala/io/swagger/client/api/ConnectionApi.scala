@@ -1,7 +1,7 @@
 package io.swagger.client.api
 
 import io.swagger.client.model.Inline_response_200_3
-import io.swagger.client.model.Inline_response_200_4
+import io.swagger.client.model.Inline_response_200_14
 import io.swagger.client.model.Connection
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
@@ -28,22 +28,23 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Get all Connections
    * Get all Connections
-   * @param userId user_id
-   * @param connectorId connector_id
-   * @param connectStatus connect_status
-   * @param connectError connect_error
-   * @param updateRequestedAt update_requested_at
-   * @param updateStatus update_status
-   * @param updateError update_error
-   * @param lastSuccessfulUpdatedAt last_successful_updated_at
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param userId ID of user that owns this correlation
+   * @param connectorId The id for the connector data source for which the connection is connected
+   * @param connectStatus Indicates whether a connector is currently connected to a service for a user.
+   * @param connectError Error message if there is a problem with authorizing this connection.
+   * @param updateRequestedAt Time at which an update was requested by a user.
+   * @param updateStatus Indicates whether a connector is currently updated.
+   * @param updateError Indicates if there was an error during the update.
+   * @param lastSuccessfulUpdatedAt The time at which the connector was last successfully updated.
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
+   * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
+   * @param sort Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.
    * @return Inline_response_200_3
    */
-  def connectionsGet (userId: Integer, connectorId: Integer, connectStatus: String, connectError: String, updateRequestedAt: String, updateStatus: String, updateError: String, lastSuccessfulUpdatedAt: String, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_3] = {
+  def connectionsGet (accessToken: String, userId: Integer, connectorId: Integer, connectStatus: String, connectError: String, updateRequestedAt: String, updateStatus: String, updateError: String, lastSuccessfulUpdatedAt: String, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_3] = {
     // create path and map variables
     val path = "/connections".replaceAll("\\{format\\}","json")
 
@@ -57,6 +58,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(userId) != "null") queryParams += "user_id" -> userId.toString
     if(String.valueOf(connectorId) != "null") queryParams += "connector_id" -> connectorId.toString
     if(String.valueOf(connectStatus) != "null") queryParams += "connect_status" -> connectStatus.toString
@@ -101,10 +103,11 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Store Connection
    * Store Connection
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Connection that should be stored
-   * @return Inline_response_200_4
+   * @return Inline_response_200_14
    */
-  def connectionsPost (body: Connection) : Option[Inline_response_200_4] = {
+  def connectionsPost (accessToken: String, body: Connection) : Option[Inline_response_200_14] = {
     // create path and map variables
     val path = "/connections".replaceAll("\\{format\\}","json")
 
@@ -118,6 +121,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -136,7 +140,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_4]).asInstanceOf[Inline_response_200_4])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_14]).asInstanceOf[Inline_response_200_14])
          
         case _ => None
       }
@@ -150,9 +154,10 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Get Connection
    * Get Connection
    * @param id id of Connection
-   * @return Inline_response_200_4
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_14
    */
-  def connectionsIdGet (id: Integer) : Option[Inline_response_200_4] = {
+  def connectionsIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_14] = {
     // create path and map variables
     val path = "/connections/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -168,6 +173,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -186,7 +192,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_4]).asInstanceOf[Inline_response_200_4])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_14]).asInstanceOf[Inline_response_200_14])
          
         case _ => None
       }
@@ -200,10 +206,11 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Update Connection
    * Update Connection
    * @param id id of Connection
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Connection that should be updated
    * @return Inline_response_200_2
    */
-  def connectionsIdPut (id: Integer, body: Connection) : Option[Inline_response_200_2] = {
+  def connectionsIdPut (id: Integer, accessToken: String, body: Connection) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/connections/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -219,6 +226,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -251,9 +259,10 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Delete Connection
    * Delete Connection
    * @param id id of Connection
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def connectionsIdDelete (id: Integer) : Option[Inline_response_200_2] = {
+  def connectionsIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/connections/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -269,6 +278,7 @@ class ConnectionApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     

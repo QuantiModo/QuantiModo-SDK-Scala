@@ -1,8 +1,8 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.Inline_response_200_25
+import io.swagger.client.model.Inline_response_200_10
 import io.swagger.client.model.VariableUserSource
-import io.swagger.client.model.Inline_response_200_26
+import io.swagger.client.model.Inline_response_200_33
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
@@ -28,17 +28,20 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
   /**
    * Get all VariableUserSources
    * Get all VariableUserSources
-   * @param variableId variable_id
-   * @param userId user_id
-   * @param timestamp timestamp
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
-   * @return Inline_response_200_25
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param variableId ID of variable
+   * @param userId ID of User
+   * @param timestamp Time that this measurement occurred Uses epoch minute (epoch time divided by 60)
+   * @param earliestMeasurementTime Earliest measurement time
+   * @param latestMeasurementTime Latest measurement time
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
+   * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
+   * @param sort Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.
+   * @return Inline_response_200_10
    */
-  def variableUserSourcesGet (variableId: Integer, userId: Integer, timestamp: Integer, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_25] = {
+  def variableUserSourcesGet (accessToken: String, variableId: Integer, userId: Integer, timestamp: Integer, earliestMeasurementTime: Integer, latestMeasurementTime: Integer, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_10] = {
     // create path and map variables
     val path = "/variableUserSources".replaceAll("\\{format\\}","json")
 
@@ -52,9 +55,12 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(variableId) != "null") queryParams += "variable_id" -> variableId.toString
     if(String.valueOf(userId) != "null") queryParams += "user_id" -> userId.toString
     if(String.valueOf(timestamp) != "null") queryParams += "timestamp" -> timestamp.toString
+    if(String.valueOf(earliestMeasurementTime) != "null") queryParams += "earliest_measurement_time" -> earliestMeasurementTime.toString
+    if(String.valueOf(latestMeasurementTime) != "null") queryParams += "latest_measurement_time" -> latestMeasurementTime.toString
     if(String.valueOf(createdAt) != "null") queryParams += "created_at" -> createdAt.toString
     if(String.valueOf(updatedAt) != "null") queryParams += "updated_at" -> updatedAt.toString
     if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
@@ -78,7 +84,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_25]).asInstanceOf[Inline_response_200_25])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_10]).asInstanceOf[Inline_response_200_10])
          
         case _ => None
       }
@@ -91,10 +97,11 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
   /**
    * Store VariableUserSource
    * Store VariableUserSource
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body VariableUserSource that should be stored
-   * @return Inline_response_200_26
+   * @return Inline_response_200_33
    */
-  def variableUserSourcesPost (body: VariableUserSource) : Option[Inline_response_200_26] = {
+  def variableUserSourcesPost (accessToken: String, body: VariableUserSource) : Option[Inline_response_200_33] = {
     // create path and map variables
     val path = "/variableUserSources".replaceAll("\\{format\\}","json")
 
@@ -108,6 +115,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -126,7 +134,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_26]).asInstanceOf[Inline_response_200_26])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_33]).asInstanceOf[Inline_response_200_33])
          
         case _ => None
       }
@@ -141,9 +149,10 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
    * Get VariableUserSource
    * @param id id of VariableUserSource
    * @param sourceId source id of VariableUserSource
-   * @return Inline_response_200_26
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_33
    */
-  def variableUserSourcesIdGet (id: Integer, sourceId: Integer) : Option[Inline_response_200_26] = {
+  def variableUserSourcesIdGet (id: Integer, sourceId: Integer, accessToken: String) : Option[Inline_response_200_33] = {
     // create path and map variables
     val path = "/variableUserSources/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -159,6 +168,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(sourceId) != "null") queryParams += "source_id" -> sourceId.toString
     
     
@@ -178,7 +188,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_26]).asInstanceOf[Inline_response_200_26])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_33]).asInstanceOf[Inline_response_200_33])
          
         case _ => None
       }
@@ -193,10 +203,11 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
    * Update VariableUserSource
    * @param id variable_id of VariableUserSource
    * @param sourceId source id of VariableUserSource
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body VariableUserSource that should be updated
    * @return Inline_response_200_2
    */
-  def variableUserSourcesIdPut (id: Integer, sourceId: Integer, body: VariableUserSource) : Option[Inline_response_200_2] = {
+  def variableUserSourcesIdPut (id: Integer, sourceId: Integer, accessToken: String, body: VariableUserSource) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/variableUserSources/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -212,6 +223,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(sourceId) != "null") queryParams += "source_id" -> sourceId.toString
     
     
@@ -246,9 +258,10 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
    * Delete VariableUserSource
    * @param id variable_id of VariableUserSource
    * @param sourceId source id of VariableUserSource
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def variableUserSourcesIdDelete (id: Integer, sourceId: Integer) : Option[Inline_response_200_2] = {
+  def variableUserSourcesIdDelete (id: Integer, sourceId: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/variableUserSources/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -264,6 +277,7 @@ class VariableUserSourceApi(val defBasePath: String = "https://app.quantimo.do/a
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(sourceId) != "null") queryParams += "source_id" -> sourceId.toString
     
     

@@ -15,20 +15,20 @@ case class Unit (
   abbreviated_name: String,
   /* Unit category ID */
   category_id: Integer,
-  /* Unit minimum value */
+  /* Minimum value permitted for this unit */
   minimum_value: Float,
-  /* Unit maximum value */
+  /* Maximum value permitted for this unit */
   maximum_value: Float,
   /* updated */
   updated: Integer,
-  /* ID of default unit */
+  /* ID of default unit for this units category */
   default_unit_id: Integer,
-  /* Value multiplied to */
+  /* Value multiplied to convert to default unit in this unit category */
   multiply: Float,
   /* Value which should be added to convert to default unit */
   add: Float,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime)
   

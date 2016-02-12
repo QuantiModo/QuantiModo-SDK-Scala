@@ -4,6 +4,6 @@ package io.swagger.client.model
 
 
 case class Inline_response_200_10 (
-  data: Credential,
+  data: List[VariableUserSource],
   success: Boolean)
   

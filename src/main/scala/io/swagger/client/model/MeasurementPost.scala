@@ -4,11 +4,11 @@ package io.swagger.client.model
 
 
 case class MeasurementPost (
-  /* variable_id */
+  /* ID of the variable for the measurement as obtained from the GET variables endpoint */
   variable_id: Integer,
-  /* source_id */
+  /* Source ID of the app or device as obtained from the GET sources endpoint */
   source_id: Integer,
-  /* unit_id */
+  /* Unit id for the measurement value as obtained from the GET units endpoint */
   unit_id: Integer,
   /* measurements */
   measurements: List[MeasurementValue])

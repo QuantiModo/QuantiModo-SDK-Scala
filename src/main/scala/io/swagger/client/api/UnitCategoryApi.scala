@@ -1,7 +1,7 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.Inline_response_200_15
-import io.swagger.client.model.Inline_response_200_16
+import io.swagger.client.model.Inline_response_200_24
+import io.swagger.client.model.Inline_response_200_25
 import io.swagger.client.model.UnitCategory
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
@@ -26,17 +26,18 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
 
   
   /**
-   * Get all UnitCategories
-   * Get all UnitCategories
-   * @param name name
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
-   * @return Inline_response_200_15
+   * Get unit categories
+   * Get a list of the categories of measurement units such as &#39;Distance&#39;, &#39;Duration&#39;, &#39;Energy&#39;, &#39;Frequency&#39;, &#39;Miscellany&#39;, &#39;Pressure&#39;, &#39;Proportion&#39;, &#39;Rating&#39;, &#39;Temperature&#39;, &#39;Volume&#39;, and &#39;Weight&#39;.
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param name Unit category name
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
+   * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
+   * @param sort Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.
+   * @return Inline_response_200_24
    */
-  def unitCategoriesGet (name: String, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_15] = {
+  def unitCategoriesGet (accessToken: String, name: String, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_24] = {
     // create path and map variables
     val path = "/unitCategories".replaceAll("\\{format\\}","json")
 
@@ -50,6 +51,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(name) != "null") queryParams += "name" -> name.toString
     if(String.valueOf(createdAt) != "null") queryParams += "created_at" -> createdAt.toString
     if(String.valueOf(updatedAt) != "null") queryParams += "updated_at" -> updatedAt.toString
@@ -74,7 +76,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_15]).asInstanceOf[Inline_response_200_15])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_24]).asInstanceOf[Inline_response_200_24])
          
         case _ => None
       }
@@ -87,10 +89,11 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
   /**
    * Store UnitCategory
    * Store UnitCategory
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body UnitCategory that should be stored
-   * @return Inline_response_200_16
+   * @return Inline_response_200_25
    */
-  def unitCategoriesPost (body: UnitCategory) : Option[Inline_response_200_16] = {
+  def unitCategoriesPost (accessToken: String, body: UnitCategory) : Option[Inline_response_200_25] = {
     // create path and map variables
     val path = "/unitCategories".replaceAll("\\{format\\}","json")
 
@@ -104,6 +107,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -122,7 +126,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_16]).asInstanceOf[Inline_response_200_16])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_25]).asInstanceOf[Inline_response_200_25])
          
         case _ => None
       }
@@ -136,9 +140,10 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
    * Get UnitCategory
    * Get UnitCategory
    * @param id id of UnitCategory
-   * @return Inline_response_200_16
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_25
    */
-  def unitCategoriesIdGet (id: Integer) : Option[Inline_response_200_16] = {
+  def unitCategoriesIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_25] = {
     // create path and map variables
     val path = "/unitCategories/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -154,6 +159,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -172,7 +178,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_16]).asInstanceOf[Inline_response_200_16])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_25]).asInstanceOf[Inline_response_200_25])
          
         case _ => None
       }
@@ -186,10 +192,11 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
    * Update UnitCategory
    * Update UnitCategory
    * @param id id of UnitCategory
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body UnitCategory that should be updated
    * @return Inline_response_200_2
    */
-  def unitCategoriesIdPut (id: Integer, body: UnitCategory) : Option[Inline_response_200_2] = {
+  def unitCategoriesIdPut (id: Integer, accessToken: String, body: UnitCategory) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/unitCategories/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -205,6 +212,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -237,9 +245,10 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
    * Delete UnitCategory
    * Delete UnitCategory
    * @param id id of UnitCategory
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def unitCategoriesIdDelete (id: Integer) : Option[Inline_response_200_2] = {
+  def unitCategoriesIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/unitCategories/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -255,6 +264,7 @@ class UnitCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2"
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     

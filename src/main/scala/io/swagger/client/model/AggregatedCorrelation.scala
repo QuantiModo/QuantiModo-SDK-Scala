@@ -7,54 +7,56 @@ import org.joda.time.DateTime
 case class AggregatedCorrelation (
   /* id */
   id: Integer,
-  /* correlation */
+  /* Pearson correlation coefficient between cause and effect measurements */
   correlation: Float,
-  /* cause_id */
+  /* variable ID of the cause variable for which the user desires correlations */
   cause_id: Integer,
-  /* effect_id */
+  /* variable ID of the effect variable for which the user desires correlations */
   effect_id: Integer,
-  /* onset_delay */
+  /* User estimated or default time after cause measurement before a perceivable effect is observed */
   onset_delay: Integer,
-  /* duration_of_action */
+  /* Time over which the cause is expected to produce a perceivable effect following the onset delay */
   duration_of_action: Integer,
-  /* number_of_pairs */
+  /* Number of points that went into the correlation calculation */
   number_of_pairs: Integer,
-  /* value_predicting_high_outcome */
+  /* cause value that predicts an above average effect value (in default unit for cause variable) */
   value_predicting_high_outcome: Float,
-  /* value_predicting_low_outcome */
+  /* cause value that predicts a below average effect value (in default unit for cause variable) */
   value_predicting_low_outcome: Float,
-  /* optimal_pearson_product */
+  /* Optimal Pearson Product */
   optimal_pearson_product: Float,
-  /* vote */
+  /* Vote */
   vote: Float,
-  /* number_of_users */
+  /* Number of Users by which correlation is aggregated */
   number_of_users: Integer,
-  /* number_of_correlations */
+  /* Number of Correlations by which correlation is aggregated */
   number_of_correlations: Integer,
-  /* statistical_significance */
+  /* A function of the effect size and sample size */
   statistical_significance: Float,
-  /* cause_unit */
+  /* Unit of the predictor variable */
   cause_unit: String,
-  /* cause_unit_id */
+  /* Unit ID of the predictor variable */
   cause_unit_id: Integer,
-  /* cause_changes */
+  /* Cause changes */
   cause_changes: Integer,
-  /* effect_changes */
+  /* Effect changes */
   effect_changes: Integer,
-  /* aggregate_qm_score */
+  /* Aggregated QM Score */
   aggregate_qm_score: Float,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime,
-  /* status */
+  /* Status */
   status: String,
-  /* error_message */
+  /* Error Message */
   error_message: String,
-  /* last_successful_update_time */
+  /* Last Successful update time */
   last_successful_update_time: DateTime,
-  /* reverse_pearson_correlation_coefficient */
+  /* Correlation when cause and effect are reversed. For any causal relationship, the forward correlation should exceed the reverse correlation */
   reverse_pearson_correlation_coefficient: Float,
-  /* predictive_pearson_correlation_coefficient */
-  predictive_pearson_correlation_coefficient: Float)
+  /* Predictive Pearson Correlation Coefficient */
+  predictive_pearson_correlation_coefficient: Float,
+  /* Source of data for this correlation */
+  data_source: String)
   

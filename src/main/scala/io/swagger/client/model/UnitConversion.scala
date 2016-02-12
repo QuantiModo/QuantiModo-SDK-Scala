@@ -13,8 +13,8 @@ case class UnitConversion (
   operation: Boolean,
   /* number used in the operation */
   value: Float,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime)
   

@@ -1,8 +1,8 @@
 package io.swagger.client.api
 
-import io.swagger.client.model.Inline_response_200_9
+import io.swagger.client.model.Inline_response_200_4
+import io.swagger.client.model.Inline_response_200_19
 import io.swagger.client.model.Credential
-import io.swagger.client.model.Inline_response_200_10
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
@@ -28,17 +28,19 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Get all Credentials
    * Get all Credentials
-   * @param connectorId connector_id
-   * @param attrKey attr_key
-   * @param attrValue attr_value
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
-   * @return Inline_response_200_9
+   * @param accessToken User&#39;s OAuth2 access token
+   * @param userId ID of user that owns this credential
+   * @param connectorId The id for the connector data source from which the credential was obtained
+   * @param attrKey Attribute name such as token, userid, username, or password
+   * @param attrValue Encrypted value for the attribute specified
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
+   * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
+   * @param sort Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.
+   * @return Inline_response_200_4
    */
-  def credentialsGet (connectorId: Boolean, attrKey: String, attrValue: String, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_9] = {
+  def credentialsGet (accessToken: String, userId: Integer, connectorId: Integer, attrKey: String, attrValue: String, createdAt: String, updatedAt: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_4] = {
     // create path and map variables
     val path = "/credentials".replaceAll("\\{format\\}","json")
 
@@ -52,6 +54,8 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
+    if(String.valueOf(userId) != "null") queryParams += "user_id" -> userId.toString
     if(String.valueOf(connectorId) != "null") queryParams += "connector_id" -> connectorId.toString
     if(String.valueOf(attrKey) != "null") queryParams += "attr_key" -> attrKey.toString
     if(String.valueOf(attrValue) != "null") queryParams += "attr_value" -> attrValue.toString
@@ -78,7 +82,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_9]).asInstanceOf[Inline_response_200_9])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_4]).asInstanceOf[Inline_response_200_4])
          
         case _ => None
       }
@@ -91,10 +95,11 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Store Credential
    * Store Credential
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Credential that should be stored
-   * @return Inline_response_200_10
+   * @return Inline_response_200_19
    */
-  def credentialsPost (body: Credential) : Option[Inline_response_200_10] = {
+  def credentialsPost (accessToken: String, body: Credential) : Option[Inline_response_200_19] = {
     // create path and map variables
     val path = "/credentials".replaceAll("\\{format\\}","json")
 
@@ -108,6 +113,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -126,7 +132,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_10]).asInstanceOf[Inline_response_200_10])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_19]).asInstanceOf[Inline_response_200_19])
          
         case _ => None
       }
@@ -141,9 +147,10 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Get Credential
    * @param id connector id
    * @param attrKey attrKey
-   * @return Inline_response_200_10
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_19
    */
-  def credentialsIdGet (id: Integer, attrKey: String) : Option[Inline_response_200_10] = {
+  def credentialsIdGet (id: Integer, attrKey: String, accessToken: String) : Option[Inline_response_200_19] = {
     // create path and map variables
     val path = "/credentials/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -159,6 +166,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(attrKey) != "null") queryParams += "attrKey" -> attrKey.toString
     
     
@@ -178,7 +186,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_10]).asInstanceOf[Inline_response_200_10])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_19]).asInstanceOf[Inline_response_200_19])
          
         case _ => None
       }
@@ -193,10 +201,11 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Update Credential
    * @param id connector id
    * @param attrKey attrKey
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Credential that should be updated
    * @return Inline_response_200_2
    */
-  def credentialsIdPut (id: Integer, attrKey: String, body: Credential) : Option[Inline_response_200_2] = {
+  def credentialsIdPut (id: Integer, attrKey: String, accessToken: String, body: Credential) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/credentials/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -212,6 +221,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(attrKey) != "null") queryParams += "attrKey" -> attrKey.toString
     
     
@@ -246,9 +256,10 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Delete Credential
    * @param id connector id
    * @param attrKey attrKey
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def credentialsIdDelete (id: Integer, attrKey: String) : Option[Inline_response_200_2] = {
+  def credentialsIdDelete (id: Integer, attrKey: String, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/credentials/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -264,6 +275,7 @@ class CredentialApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(attrKey) != "null") queryParams += "attrKey" -> attrKey.toString
     
     

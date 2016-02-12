@@ -11,14 +11,14 @@ case class Vote (
   client_id: String,
   /* ID of User */
   user_id: Integer,
-  /* ID of cause variable */
+  /* ID of the predictor variable */
   cause_id: Integer,
   /* ID of effect variable */
   effect_id: Integer,
   /* Value of Vote */
   value: Integer,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime)
   

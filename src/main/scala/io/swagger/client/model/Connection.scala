@@ -7,24 +7,24 @@ import org.joda.time.DateTime
 case class Connection (
   /* id */
   id: Integer,
-  /* user_id */
+  /* ID of user that owns this correlation */
   user_id: Integer,
-  /* connector_id */
+  /* The id for the connector data source for which the connection is connected */
   connector_id: Integer,
-  /* connect_status */
+  /* Indicates whether a connector is currently connected to a service for a user. */
   connect_status: String,
-  /* connect_error */
+  /* Error message if there is a problem with authorizing this connection. */
   connect_error: String,
-  /* update_requested_at */
+  /* Time at which an update was requested by a user. */
   update_requested_at: DateTime,
-  /* update_status */
+  /* Indicates whether a connector is currently updated. */
   update_status: String,
-  /* update_error */
+  /* Indicates if there was an error during the update. */
   update_error: String,
-  /* last_successful_updated_at */
+  /* The time at which the connector was last successfully updated. */
   last_successful_updated_at: DateTime,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime)
   

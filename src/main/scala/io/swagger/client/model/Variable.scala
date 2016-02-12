@@ -9,72 +9,72 @@ case class Variable (
   id: Integer,
   /* client_id */
   client_id: String,
-  /* parent_id */
+  /* ID of the parent variable if this variable has any parent */
   parent_id: Integer,
-  /* Name of the variable */
+  /* User-defined variable display name */
   name: String,
-  /* Category of the variable */
+  /* Variable category ID */
   variable_category_id: Integer,
   /* ID of the default unit of measurement to use for this variable */
   default_unit_id: Integer,
-  /* How to combine values of this variable (for instance, to see a summary of the values over a month) 0 for sum OR 1 for mean */
+  /* How to combine values of this variable (for instance, to see a summary of the values over a month) SUM or MEAN */
   combination_operation: String,
-  /* filling_value */
+  /* Value for replacing null measurements */
   filling_value: Float,
-  /* maximum_allowed_value */
+  /* Maximum reasonable value for this variable (uses default unit) */
   maximum_allowed_value: Float,
-  /* minimum_allowed_value */
+  /* Minimum reasonable value for this variable (uses default unit) */
   minimum_allowed_value: Float,
-  /* onset_delay */
+  /* How long it takes for a measurement in this variable to take effect */
   onset_delay: Integer,
-  /* duration_of_action */
+  /* How long the effect of a measurement in this variable lasts */
   duration_of_action: Integer,
-  /* public */
+  /* Is variable public */
   public: Integer,
-  /* cause_only */
+  /* A value of 1 indicates that this variable is generally a cause in a causal relationship.  An example of a causeOnly variable would be a variable such as Cloud Cover which would generally not be influenced by the behaviour of the user */
   cause_only: Boolean,
-  /* most_common_value */
+  /* Most common value */
   most_common_value: Float,
-  /* most_common_unit_id */
+  /* Most common Unit */
   most_common_unit_id: Integer,
-  /* standard_deviation */
+  /* Standard Deviation */
   standard_deviation: Float,
-  /* variance */
+  /* Variance */
   variance: Float,
-  /* mean */
+  /* Mean */
   mean: Float,
-  /* median */
+  /* Median */
   median: Float,
-  /* number_of_measurements */
+  /* Number of measurements */
   number_of_measurements: Float,
-  /* number_of_unique_values */
+  /* Number of unique values */
   number_of_unique_values: Float,
-  /* skewness */
+  /* Skewness */
   skewness: Float,
-  /* kurtosis */
+  /* Kurtosis */
   kurtosis: Float,
   /* status */
   status: String,
   /* error_message */
   error_message: String,
-  /* last_successful_update_time */
+  /* When this variable or its settings were last updated */
   last_successful_update_time: DateTime,
-  /* created_at */
+  /* When the record was first created. Use ISO 8601 datetime format */
   created_at: DateTime,
-  /* updated_at */
+  /* When the record in the database was last updated. Use ISO 8601 datetime format */
   updated_at: DateTime,
-  /* product_url */
+  /* Product URL */
   product_url: String,
-  /* image_url */
+  /* Image URL */
   image_url: String,
-  /* price */
+  /* Price */
   price: Float,
-  /* number_of_user_variables */
+  /* Number of variables */
   number_of_user_variables: Integer,
-  /* outcome */
+  /* Outcome variables (those with `outcome` == 1) are variables for which a human would generally want to identify the influencing factors.  These include symptoms of illness, physique, mood, cognitive performance, etc.  Generally correlation calculations are only performed on outcome variables. */
   outcome: Boolean,
-  /* minimum_recorded_value */
+  /* Minimum recorded value of this variable */
   minimum_recorded_value: Float,
-  /* maximum_recorded_value */
+  /* Maximum recorded value of this variable */
   maximum_recorded_value: Float)
   

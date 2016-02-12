@@ -1,9 +1,9 @@
 package io.swagger.client.api
 
 import io.swagger.client.model.Number
-import io.swagger.client.model.Inline_response_200_27
+import io.swagger.client.model.Inline_response_200_34
 import io.swagger.client.model.Variable
-import io.swagger.client.model.Inline_response_200_28
+import io.swagger.client.model.Inline_response_200_35
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
@@ -29,51 +29,49 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   /**
    * Get all Variables
    * Get all Variables
+   * @param accessToken User&#39;s OAuth2 access token
    * @param id id
-   * @param clientId client_id
-   * @param parentId parent_id
-   * @param name name
-   * @param variableCategoryId variable_category_id
-   * @param defaultUnitId default_unit_id
-   * @param combinationOperation combination_operation
-   * @param fillingValue filling_value
-   * @param maximumAllowedValue maximum_allowed_value
-   * @param minimumAllowedValue minimum_allowed_value
-   * @param onsetDelay onset_delay
-   * @param durationOfAction duration_of_action
-   * @param public public
-   * @param causeOnly cause_only
-   * @param mostCommonValue most_common_value
-   * @param mostCommonUnitId most_common_unit_id
-   * @param standardDeviation standard_deviation
-   * @param variance variance
-   * @param mean mean
-   * @param median median
-   * @param numberOfMeasurements number_of_measurements
-   * @param numberOfUniqueValues number_of_unique_values
-   * @param skewness skewness
-   * @param kurtosis kurtosis
-   * @param latitude latitude
-   * @param longitude longitude
-   * @param location location
+   * @param clientId The ID of the client application which last created or updated this common variable
+   * @param parentId ID of the parent variable if this variable has any parent
+   * @param name User-defined variable display name
+   * @param variableCategoryId Variable category ID
+   * @param defaultUnitId ID of the default unit for the variable
+   * @param combinationOperation How to combine values of this variable (for instance, to see a summary of the values over a month) SUM or MEAN
+   * @param fillingValue Value for replacing null measurements
+   * @param maximumAllowedValue Maximum reasonable value for this variable (uses default unit)
+   * @param minimumAllowedValue Minimum reasonable value for this variable (uses default unit)
+   * @param onsetDelay Estimated number of seconds that pass before a stimulus produces a perceivable effect
+   * @param durationOfAction Estimated number of seconds following the onset delay in which a stimulus produces a perceivable effect
+   * @param public Is variable public
+   * @param causeOnly A value of 1 indicates that this variable is generally a cause in a causal relationship.  An example of a causeOnly variable would be a variable such as Cloud Cover which would generally not be influenced by the behaviour of the user
+   * @param mostCommonValue Most common value
+   * @param mostCommonUnitId Most common Unit
+   * @param standardDeviation Standard Deviation
+   * @param variance Average variance for this variable based on all user data
+   * @param mean Mean for this variable based on all user data
+   * @param median Median for this variable based on all user data
+   * @param numberOfMeasurements Number of measurements for this variable based on all user data
+   * @param numberOfUniqueValues Number of unique values for this variable based on all user data
+   * @param skewness Skewness for this variable based on all user data
+   * @param kurtosis Kurtosis for this variable based on all user data
    * @param status status
    * @param errorMessage error_message
-   * @param lastSuccessfulUpdateTime last_successful_update_time
-   * @param createdAt created_at
-   * @param updatedAt updated_at
-   * @param productUrl product_url
-   * @param imageUrl image_url
-   * @param price price
-   * @param numberOfUserVariables number_of_user_variables
-   * @param outcome outcome
-   * @param minimumRecordedValue minimum_recorded_value
-   * @param maximumRecordedValue maximum_recorded_value
-   * @param limit limit
-   * @param offset offset
-   * @param sort sort
-   * @return Inline_response_200_27
+   * @param lastSuccessfulUpdateTime When this variable or its settings were last updated
+   * @param createdAt When the record was first created. Use ISO 8601 datetime format
+   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
+   * @param productUrl Product URL
+   * @param imageUrl Image URL
+   * @param price Price
+   * @param numberOfUserVariables Number of users who have data for this variable
+   * @param outcome Outcome variables (those with `outcome` == 1) are variables for which a human would generally want to identify the influencing factors.  These include symptoms of illness, physique, mood, cognitive performance, etc.  Generally correlation calculations are only performed on outcome variables.
+   * @param minimumRecordedValue Minimum recorded value of this variable based on all user data
+   * @param maximumRecordedValue Maximum recorded value of this variable based on all user data
+   * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
+   * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
+   * @param sort Sort records by a given field name. If the field name is prefixed with &#39;-&#39;, it will sort in descending order.
+   * @return Inline_response_200_34
    */
-  def variablesGet (id: Integer, clientId: String, parentId: Integer, name: String, variableCategoryId: Integer, defaultUnitId: Integer, combinationOperation: String, fillingValue: Number, maximumAllowedValue: Number, minimumAllowedValue: Number, onsetDelay: Integer, durationOfAction: Integer, public: Integer, causeOnly: Boolean, mostCommonValue: Number, mostCommonUnitId: Integer, standardDeviation: Number, variance: Number, mean: Number, median: Number, numberOfMeasurements: Number, numberOfUniqueValues: Number, skewness: Number, kurtosis: Number, latitude: Number, longitude: Number, location: String, status: String, errorMessage: String, lastSuccessfulUpdateTime: String, createdAt: String, updatedAt: String, productUrl: String, imageUrl: String, price: Number, numberOfUserVariables: Integer, outcome: Boolean, minimumRecordedValue: Number, maximumRecordedValue: Number, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_27] = {
+  def variablesGet (accessToken: String, id: Integer, clientId: String, parentId: Integer, name: String, variableCategoryId: Integer, defaultUnitId: Integer, combinationOperation: String, fillingValue: Number, maximumAllowedValue: Number, minimumAllowedValue: Number, onsetDelay: Integer, durationOfAction: Integer, public: Integer, causeOnly: Boolean, mostCommonValue: Number, mostCommonUnitId: Integer, standardDeviation: Number, variance: Number, mean: Number, median: Number, numberOfMeasurements: Number, numberOfUniqueValues: Number, skewness: Number, kurtosis: Number, status: String, errorMessage: String, lastSuccessfulUpdateTime: String, createdAt: String, updatedAt: String, productUrl: String, imageUrl: String, price: Number, numberOfUserVariables: Integer, outcome: Boolean, minimumRecordedValue: Number, maximumRecordedValue: Number, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_34] = {
     // create path and map variables
     val path = "/variables".replaceAll("\\{format\\}","json")
 
@@ -87,6 +85,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     if(String.valueOf(id) != "null") queryParams += "id" -> id.toString
     if(String.valueOf(clientId) != "null") queryParams += "client_id" -> clientId.toString
     if(String.valueOf(parentId) != "null") queryParams += "parent_id" -> parentId.toString
@@ -111,9 +110,6 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     if(String.valueOf(numberOfUniqueValues) != "null") queryParams += "number_of_unique_values" -> numberOfUniqueValues.toString
     if(String.valueOf(skewness) != "null") queryParams += "skewness" -> skewness.toString
     if(String.valueOf(kurtosis) != "null") queryParams += "kurtosis" -> kurtosis.toString
-    if(String.valueOf(latitude) != "null") queryParams += "latitude" -> latitude.toString
-    if(String.valueOf(longitude) != "null") queryParams += "longitude" -> longitude.toString
-    if(String.valueOf(location) != "null") queryParams += "location" -> location.toString
     if(String.valueOf(status) != "null") queryParams += "status" -> status.toString
     if(String.valueOf(errorMessage) != "null") queryParams += "error_message" -> errorMessage.toString
     if(String.valueOf(lastSuccessfulUpdateTime) != "null") queryParams += "last_successful_update_time" -> lastSuccessfulUpdateTime.toString
@@ -147,7 +143,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_27]).asInstanceOf[Inline_response_200_27])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_34]).asInstanceOf[Inline_response_200_34])
          
         case _ => None
       }
@@ -159,11 +155,12 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
   
   /**
    * Store Variable
-   * Store Variable
+   * Allows the client to create a new variable in the `variables` table.
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Variable that should be stored
-   * @return Inline_response_200_28
+   * @return Inline_response_200_35
    */
-  def variablesPost (body: Variable) : Option[Inline_response_200_28] = {
+  def variablesPost (accessToken: String, body: Variable) : Option[Inline_response_200_35] = {
     // create path and map variables
     val path = "/variables".replaceAll("\\{format\\}","json")
 
@@ -177,6 +174,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -195,7 +193,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_28]).asInstanceOf[Inline_response_200_28])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_35]).asInstanceOf[Inline_response_200_35])
          
         case _ => None
       }
@@ -209,9 +207,10 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Get Variable
    * Get Variable
    * @param id id of Variable
-   * @return Inline_response_200_28
+   * @param accessToken User&#39;s OAuth2 access token
+   * @return Inline_response_200_35
    */
-  def variablesIdGet (id: Integer) : Option[Inline_response_200_28] = {
+  def variablesIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_35] = {
     // create path and map variables
     val path = "/variables/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -227,6 +226,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -245,7 +245,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_28]).asInstanceOf[Inline_response_200_28])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_35]).asInstanceOf[Inline_response_200_35])
          
         case _ => None
       }
@@ -259,10 +259,11 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Update Variable
    * Update Variable
    * @param id id of Variable
+   * @param accessToken User&#39;s OAuth2 access token
    * @param body Variable that should be updated
    * @return Inline_response_200_2
    */
-  def variablesIdPut (id: Integer, body: Variable) : Option[Inline_response_200_2] = {
+  def variablesIdPut (id: Integer, accessToken: String, body: Variable) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/variables/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -278,6 +279,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     
@@ -310,9 +312,10 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
    * Delete Variable
    * Delete Variable
    * @param id id of Variable
+   * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def variablesIdDelete (id: Integer) : Option[Inline_response_200_2] = {
+  def variablesIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
     val path = "/variables/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
@@ -328,6 +331,7 @@ class VariableApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
 
     
 
+    if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
     
     
     

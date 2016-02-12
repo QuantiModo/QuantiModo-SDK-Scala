@@ -1,9 +1,9 @@
 package io.swagger.client.api
 
 import io.swagger.client.model.Number
-import io.swagger.client.model.Inline_response_200_31
-import io.swagger.client.model.VariableCategory
-import io.swagger.client.model.Inline_response_200_32
+import io.swagger.client.model.Inline_response_200_12
+import io.swagger.client.model.Inline_response_200_13
+import io.swagger.client.model.CommonVariableRelationship
 import io.swagger.client.model.Inline_response_200_2
 import io.swagger.client.ApiInvoker
 import io.swagger.client.ApiException
@@ -18,7 +18,7 @@ import java.util.Date
 
 import scala.collection.mutable.HashMap
 
-class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
+class CommonVariableRelationshipApi(val defBasePath: String = "https://app.quantimo.do/api/v2",
                         defApiInvoker: ApiInvoker = ApiInvoker) {
   var basePath = defBasePath
   var apiInvoker = defApiInvoker
@@ -27,32 +27,36 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
 
   
   /**
-   * Get all VariableCategories
-   * The variable categories include Activity, Causes of Illness, Cognitive Performance, Conditions, Environment, Foods, Location, Miscellaneous, Mood, Nutrition, Physical Activity, Physique, Sleep, Social Interactions, Symptoms, Treatments, Vital Signs, and Work.
+   * Get all CommonVariableRelationships
+   * Get all CommonVariableRelationships
    * @param accessToken User&#39;s OAuth2 access token
-   * @param name Name of the category
-   * @param fillingValue Value for replacing null measurements
-   * @param maximumAllowedValue Maximum recorded value of this category
-   * @param minimumAllowedValue Minimum recorded value of this category
+   * @param id id
+   * @param confidenceLevel Our confidence that a consistent predictive relationship exists based on the amount of evidence, reproducibility, and other factors
+   * @param confidenceScore A quantitative representation of our confidence that a consistent predictive relationship exists based on the amount of evidence, reproducibility, and other factors
+   * @param direction Direction is positive if higher predictor values generally precede higher outcome values. Direction is negative if higher predictor values generally precede lower outcome values.
    * @param durationOfAction Estimated number of seconds following the onset delay in which a stimulus produces a perceivable effect
+   * @param errorMessage error_message
    * @param onsetDelay Estimated number of seconds that pass before a stimulus produces a perceivable effect
-   * @param combinationOperation How to combine values of this variable (for instance, to see a summary of the values over a month) SUM or MEAN
-   * @param updated updated
-   * @param causeOnly A value of 1 indicates that this category is generally a cause in a causal relationship.  An example of a causeOnly category would be a category such as Work which would generally not be influenced by the behaviour of the user
-   * @param public Is category public
-   * @param outcome outcome
-   * @param createdAt When the record was first created. Use ISO 8601 datetime format
-   * @param updatedAt When the record was last updated. Use ISO 8601 datetime format
-   * @param imageUrl Image URL
-   * @param defaultUnitId ID of the default unit for the category
+   * @param outcomeVariableId Variable ID for the outcome variable
+   * @param predictorVariableId Variable ID for the predictor variable
+   * @param predictorUnitId ID for default unit of the predictor variable
+   * @param sinnRank A value representative of the relevance of this predictor relative to other predictors of this outcome.  Usually used for relevancy sorting.
+   * @param strengthScore A value represented to the size of the effect which the predictor appears to have on the outcome.
+   * @param strengthLevel Can be weak, medium, or strong based on the size of the effect which the predictor appears to have on the outcome relative to other variable relationship strength scores.
+   * @param upVotes Number of users who feel that there is a plausible causal relationship between the predictor and outcome variables.
+   * @param downVotes Number of users who do not feel that there is a plausible causal relationship between the predictor and outcome variables.
+   * @param valuePredictingHighOutcome Value for the predictor variable (in it&#39;s default unit) which typically precedes an above average outcome value
+   * @param valuePredictingLowOutcome Value for the predictor variable (in it&#39;s default unit) which typically precedes a below average outcome value
+   * @param numberOfUsers Number of users whose data was aggregated to obtain this relationship
+   * @param dataSource data_source
    * @param limit The LIMIT is used to limit the number of results returned. So if you have 1000 results, but only want to the first 10, you would set this to 10 and offset to 0. The maximum limit is 200 records.
    * @param offset OFFSET says to skip that many rows before beginning to return rows to the client. OFFSET 0 is the same as omitting the OFFSET clause. If both OFFSET and LIMIT appear, then OFFSET rows are skipped before starting to count the LIMIT rows that are returned.
    * @param sort Sort by given field. If the field is prefixed with &#39;-&#39;, it will sort in descending order.
-   * @return Inline_response_200_31
+   * @return Inline_response_200_12
    */
-  def variableCategoriesGet (accessToken: String, name: String, fillingValue: Number, maximumAllowedValue: Number, minimumAllowedValue: Number, durationOfAction: Integer, onsetDelay: Integer, combinationOperation: String, updated: Integer, causeOnly: Boolean, public: Integer, outcome: Boolean, createdAt: String, updatedAt: String, imageUrl: String, defaultUnitId: Integer, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_31] = {
+  def commonVariableRelationshipsGet (accessToken: String, id: Integer, confidenceLevel: String, confidenceScore: Number, direction: String, durationOfAction: Integer, errorMessage: String, onsetDelay: Integer, outcomeVariableId: Integer, predictorVariableId: Integer, predictorUnitId: Integer, sinnRank: Number, strengthScore: Number, strengthLevel: String, upVotes: Integer, downVotes: Integer, valuePredictingHighOutcome: Number, valuePredictingLowOutcome: Number, numberOfUsers: Integer, dataSource: String, limit: Integer, offset: Integer, sort: String) : Option[Inline_response_200_12] = {
     // create path and map variables
-    val path = "/variableCategories".replaceAll("\\{format\\}","json")
+    val path = "/commonVariableRelationships".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json", "application/json")
     val contentType = contentTypes(0)
@@ -65,21 +69,25 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
     
 
     if(String.valueOf(accessToken) != "null") queryParams += "access_token" -> accessToken.toString
-    if(String.valueOf(name) != "null") queryParams += "name" -> name.toString
-    if(String.valueOf(fillingValue) != "null") queryParams += "filling_value" -> fillingValue.toString
-    if(String.valueOf(maximumAllowedValue) != "null") queryParams += "maximum_allowed_value" -> maximumAllowedValue.toString
-    if(String.valueOf(minimumAllowedValue) != "null") queryParams += "minimum_allowed_value" -> minimumAllowedValue.toString
+    if(String.valueOf(id) != "null") queryParams += "id" -> id.toString
+    if(String.valueOf(confidenceLevel) != "null") queryParams += "confidence_level" -> confidenceLevel.toString
+    if(String.valueOf(confidenceScore) != "null") queryParams += "confidence_score" -> confidenceScore.toString
+    if(String.valueOf(direction) != "null") queryParams += "direction" -> direction.toString
     if(String.valueOf(durationOfAction) != "null") queryParams += "duration_of_action" -> durationOfAction.toString
+    if(String.valueOf(errorMessage) != "null") queryParams += "error_message" -> errorMessage.toString
     if(String.valueOf(onsetDelay) != "null") queryParams += "onset_delay" -> onsetDelay.toString
-    if(String.valueOf(combinationOperation) != "null") queryParams += "combination_operation" -> combinationOperation.toString
-    if(String.valueOf(updated) != "null") queryParams += "updated" -> updated.toString
-    if(String.valueOf(causeOnly) != "null") queryParams += "cause_only" -> causeOnly.toString
-    if(String.valueOf(public) != "null") queryParams += "public" -> public.toString
-    if(String.valueOf(outcome) != "null") queryParams += "outcome" -> outcome.toString
-    if(String.valueOf(createdAt) != "null") queryParams += "created_at" -> createdAt.toString
-    if(String.valueOf(updatedAt) != "null") queryParams += "updated_at" -> updatedAt.toString
-    if(String.valueOf(imageUrl) != "null") queryParams += "image_url" -> imageUrl.toString
-    if(String.valueOf(defaultUnitId) != "null") queryParams += "default_unit_id" -> defaultUnitId.toString
+    if(String.valueOf(outcomeVariableId) != "null") queryParams += "outcome_variable_id" -> outcomeVariableId.toString
+    if(String.valueOf(predictorVariableId) != "null") queryParams += "predictor_variable_id" -> predictorVariableId.toString
+    if(String.valueOf(predictorUnitId) != "null") queryParams += "predictor_unit_id" -> predictorUnitId.toString
+    if(String.valueOf(sinnRank) != "null") queryParams += "sinn_rank" -> sinnRank.toString
+    if(String.valueOf(strengthScore) != "null") queryParams += "strength_score" -> strengthScore.toString
+    if(String.valueOf(strengthLevel) != "null") queryParams += "strength_level" -> strengthLevel.toString
+    if(String.valueOf(upVotes) != "null") queryParams += "up_votes" -> upVotes.toString
+    if(String.valueOf(downVotes) != "null") queryParams += "down_votes" -> downVotes.toString
+    if(String.valueOf(valuePredictingHighOutcome) != "null") queryParams += "value_predicting_high_outcome" -> valuePredictingHighOutcome.toString
+    if(String.valueOf(valuePredictingLowOutcome) != "null") queryParams += "value_predicting_low_outcome" -> valuePredictingLowOutcome.toString
+    if(String.valueOf(numberOfUsers) != "null") queryParams += "number_of_users" -> numberOfUsers.toString
+    if(String.valueOf(dataSource) != "null") queryParams += "data_source" -> dataSource.toString
     if(String.valueOf(limit) != "null") queryParams += "limit" -> limit.toString
     if(String.valueOf(offset) != "null") queryParams += "offset" -> offset.toString
     if(String.valueOf(sort) != "null") queryParams += "sort" -> sort.toString
@@ -101,7 +109,7 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_31]).asInstanceOf[Inline_response_200_31])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_12]).asInstanceOf[Inline_response_200_12])
          
         case _ => None
       }
@@ -112,15 +120,15 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
   }
   
   /**
-   * Store VariableCategory
-   * Store VariableCategory
+   * Store CommonVariableRelationship
+   * Store CommonVariableRelationship
    * @param accessToken User&#39;s OAuth2 access token
-   * @param body VariableCategory that should be stored
-   * @return Inline_response_200_32
+   * @param body CommonVariableRelationship that should be stored
+   * @return Inline_response_200_13
    */
-  def variableCategoriesPost (accessToken: String, body: VariableCategory) : Option[Inline_response_200_32] = {
+  def commonVariableRelationshipsPost (accessToken: String, body: CommonVariableRelationship) : Option[Inline_response_200_13] = {
     // create path and map variables
-    val path = "/variableCategories".replaceAll("\\{format\\}","json")
+    val path = "/commonVariableRelationships".replaceAll("\\{format\\}","json")
 
     val contentTypes = List("application/json", "application/json")
     val contentType = contentTypes(0)
@@ -151,7 +159,7 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
     try {
       apiInvoker.invokeApi(basePath, path, "POST", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_32]).asInstanceOf[Inline_response_200_32])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_13]).asInstanceOf[Inline_response_200_13])
          
         case _ => None
       }
@@ -162,15 +170,15 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
   }
   
   /**
-   * Get VariableCategory
-   * Get VariableCategory
-   * @param id id of VariableCategory
+   * Get CommonVariableRelationship
+   * Get CommonVariableRelationship
+   * @param id id of CommonVariableRelationship
    * @param accessToken User&#39;s OAuth2 access token
-   * @return Inline_response_200_32
+   * @return Inline_response_200_13
    */
-  def variableCategoriesIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_32] = {
+  def commonVariableRelationshipsIdGet (id: Integer, accessToken: String) : Option[Inline_response_200_13] = {
     // create path and map variables
-    val path = "/variableCategories/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
+    val path = "/commonVariableRelationships/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
     
 
@@ -203,7 +211,7 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
     try {
       apiInvoker.invokeApi(basePath, path, "GET", queryParams.toMap, formParams.toMap, postBody, headerParams.toMap, contentType) match {
         case s: String =>
-           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_32]).asInstanceOf[Inline_response_200_32])
+           Some(ApiInvoker.deserialize(s, "", classOf[Inline_response_200_13]).asInstanceOf[Inline_response_200_13])
          
         case _ => None
       }
@@ -214,16 +222,16 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
   }
   
   /**
-   * Update VariableCategory
-   * Update VariableCategory
-   * @param id id of VariableCategory
+   * Update CommonVariableRelationship
+   * Update CommonVariableRelationship
+   * @param id id of CommonVariableRelationship
    * @param accessToken User&#39;s OAuth2 access token
-   * @param body VariableCategory that should be updated
+   * @param body CommonVariableRelationship that should be updated
    * @return Inline_response_200_2
    */
-  def variableCategoriesIdPut (id: Integer, accessToken: String, body: VariableCategory) : Option[Inline_response_200_2] = {
+  def commonVariableRelationshipsIdPut (id: Integer, accessToken: String, body: CommonVariableRelationship) : Option[Inline_response_200_2] = {
     // create path and map variables
-    val path = "/variableCategories/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
+    val path = "/commonVariableRelationships/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
     
 
@@ -267,15 +275,15 @@ class VariableCategoryApi(val defBasePath: String = "https://app.quantimo.do/api
   }
   
   /**
-   * Delete VariableCategory
-   * Delete VariableCategory
-   * @param id id of VariableCategory
+   * Delete CommonVariableRelationship
+   * Delete CommonVariableRelationship
+   * @param id id of CommonVariableRelationship
    * @param accessToken User&#39;s OAuth2 access token
    * @return Inline_response_200_2
    */
-  def variableCategoriesIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
+  def commonVariableRelationshipsIdDelete (id: Integer, accessToken: String) : Option[Inline_response_200_2] = {
     // create path and map variables
-    val path = "/variableCategories/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
+    val path = "/commonVariableRelationships/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}",apiInvoker.escape(id))
 
     
 
